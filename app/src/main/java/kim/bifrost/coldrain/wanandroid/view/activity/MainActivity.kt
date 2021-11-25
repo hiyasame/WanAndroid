@@ -9,12 +9,15 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.view.GravityCompat
 import androidx.lifecycle.ViewModelProvider
+import androidx.viewpager2.widget.ViewPager2
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import kim.bifrost.coldrain.wanandroid.App
 import kim.bifrost.coldrain.wanandroid.R
 import kim.bifrost.coldrain.wanandroid.databinding.ActivityMainBinding
 import kim.bifrost.coldrain.wanandroid.repo.data.UserData
 import kim.bifrost.coldrain.wanandroid.utils.then
 import kim.bifrost.coldrain.wanandroid.utils.toast
+import kim.bifrost.coldrain.wanandroid.view.adapter.MainViewPagerAdapter
 import kim.bifrost.coldrain.wanandroid.viewmodel.MainViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -48,6 +51,26 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             }
             true
         }
+        binding.bottomNav.apply {
+            labelVisibilityMode = BottomNavigationView.LABEL_VISIBILITY_LABELED
+            setOnItemSelectedListener {
+                when (it.itemId) {
+                    R.id.bottom_nav_home -> binding.viewPager.currentItem = 0
+                    R.id.bottom_nav_marketplace -> binding.viewPager.currentItem = 1
+                    R.id.bottom_nav_wechat -> binding.viewPager.currentItem = 2
+                    R.id.bottom_nav_system -> binding.viewPager.currentItem = 3
+                    R.id.bottom_nav_project -> binding.viewPager.currentItem = 4
+                }
+                true
+            }
+        }
+        binding.viewPager.adapter = MainViewPagerAdapter(this)
+        binding.viewPager.registerOnPageChangeCallback (object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                binding.bottomNav.menu.getItem(position).isChecked = true
+            }
+        })
     }
 
     @SuppressLint("SetTextI18n")
@@ -64,8 +87,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.settings -> Toast.makeText(this, "You clicked Settings",
-                Toast.LENGTH_SHORT).show()
+            R.id.query -> {
+                // TODO 搜索功能
+
+            }
             // 点击home键显示滑动菜单
             android.R.id.home -> binding.drawerLayout.openDrawer(GravityCompat.START)
         }
@@ -75,15 +100,15 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     override fun getViewBinding(): ActivityMainBinding = ActivityMainBinding.inflate(layoutInflater)
 
     // 刷新UI登录状态
-    fun reloadLoginStatus() {
+    private fun reloadLoginStatus() {
         App.coroutineScope.launch(Dispatchers.Main) {
             binding.navView.getHeaderView(0)
                 .also {
-                    it.findViewById<TextView>(R.id.userInfo).text = if (UserData.isLogged && UserData.userInfoData?.data != null)
-                        "等级: ${UserData.userInfoData!!.data!!.coinInfo!!.level} 排名: ${UserData.userInfoData!!.data!!.coinInfo!!.rank}"
+                    it.findViewById<TextView>(R.id.userInfo).text = if (UserData.isLogged && UserData.userInfoData != null)
+                        "等级: ${UserData.userInfoData!!.coinInfo!!.level} 排名: ${UserData.userInfoData!!.coinInfo!!.rank}"
                     else "等级: -- 排名: --"
-                    it.findViewById<TextView>(R.id.userName).text = if (UserData.isLogged && UserData.userInfoData?.data != null)
-                        UserData.userInfoData!!.data!!.userInfo!!.nickname
+                    it.findViewById<TextView>(R.id.userName).text = if (UserData.isLogged && UserData.userInfoData != null)
+                        UserData.userInfoData!!.userInfo.nickname
                     else "去登录"
                 }
         }

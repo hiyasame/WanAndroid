@@ -48,7 +48,7 @@ class RegisterViewModel(
                     toastConcurrent("注册成功!")
                     UserData.isLogged = true
                     val call = service.getInfo().execute()
-                    UserData.userInfoData = call.body()
+                    UserData.userInfoData = call.body()!!.data
                     _registerLiveData.postValue(true)
                 }
             }.onFailure {

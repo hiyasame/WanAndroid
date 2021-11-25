@@ -10,40 +10,24 @@ import com.google.gson.annotations.SerializedName
  * @since 2021/11/21 22:41
  **/
 data class LoginData(
-    val data: UserInfo?,
-    val errorCode: Int,
-    val errorMsg: String,
-) {
-    data class UserInfo(
-        val admin: Boolean,
-        val chapterTops: MutableList<String>,
-        val coinCount: Int,
-        val collectIds: MutableList<String>,
-        val email: String,
-        val icon: String,
-        val id: Long,
-        val nickname: String,
-        val password: String,
-        val token: String,
-        val type: Int,
-        val username: String
-    )
-
-    fun success(): Boolean {
-        return errorCode == 0
-    }
-}
+    val admin: Boolean,
+    val chapterTops: MutableList<String>,
+    val coinCount: Int,
+    val collectIds: MutableList<String>,
+    val email: String,
+    val icon: String,
+    val id: Long,
+    val nickname: String,
+    val password: String,
+    val token: String,
+    val type: Int,
+    val username: String
+)
 
 data class UserInfoData(
-    val data: InternalData?,
-    val errorCode: Int,
-    val errorMsg: String
+    val coinInfo: CoinInfoData?,
+    val userInfo: LoginData
 ) {
-    data class InternalData(
-        val coinInfo: CoinInfoData?,
-        val userInfo: LoginData.UserInfo?
-    )
-
     data class CoinInfoData(
         val coinCount: Int,
         val level: Int,
@@ -53,3 +37,18 @@ data class UserInfoData(
         val username: String
     )
 }
+
+data class BannerData(
+    val desc: String,
+    val id: Int,
+    val imagePath: String,
+    val isVisible: Int,
+    val order: Int,
+    val title: String,
+    val type: Int,
+    val url: String
+)
+
+//data class ArticleData(
+//
+//)

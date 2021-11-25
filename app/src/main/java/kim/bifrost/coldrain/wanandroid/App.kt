@@ -3,6 +3,7 @@ package kim.bifrost.coldrain.wanandroid
 import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context
+import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -27,7 +28,7 @@ class App : Application() {
 
         val coroutineScope = CoroutineScope(Dispatchers.Main)
 
-        val gson = GsonBuilder()
+        val gson: Gson = GsonBuilder()
             .setPrettyPrinting()
             .disableHtmlEscaping()
             .create()

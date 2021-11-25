@@ -1,11 +1,6 @@
 package kim.bifrost.coldrain.wanandroid.viewmodel
 
-import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.*
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
-import kim.bifrost.coldrain.wanandroid.App
 import kim.bifrost.coldrain.wanandroid.repo.data.UserData
 import kim.bifrost.coldrain.wanandroid.repo.remote.RetrofitHelper
 import kim.bifrost.coldrain.wanandroid.utils.*
@@ -45,7 +40,7 @@ class LoginViewModel(var account: String?, var password: String?) : ViewModel() 
                     // 登录成功逻辑
                     toastConcurrent("登录成功!")
                     UserData.isLogged = true
-                    UserData.userInfoData = service.getInfo().execute().body()
+                    UserData.userInfoData = service.getInfo().execute().body()!!.data
                     _loginLiveData.postValue(true)
                 }
             }.onFailure {

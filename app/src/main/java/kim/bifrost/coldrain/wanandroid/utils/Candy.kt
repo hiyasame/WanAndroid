@@ -42,3 +42,11 @@ suspend fun toastConcurrent(content: String, context: Context = App.context, dur
 
 // 是否与其中任何一个参数相同
 fun Any?.equals(vararg any: Any?): Boolean = any.any { it == this }
+
+fun <K, V> HashMap<K, V>.computeAbsent(key: K, def: V): V {
+    if (containsKey(key)) {
+        return get(key)!!
+    }
+    put(key, def)
+    return def
+}

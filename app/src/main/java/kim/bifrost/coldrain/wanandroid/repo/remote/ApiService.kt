@@ -1,6 +1,8 @@
 package kim.bifrost.coldrain.wanandroid.repo.remote
 
+import kim.bifrost.coldrain.wanandroid.repo.remote.bean.BannerData
 import kim.bifrost.coldrain.wanandroid.repo.remote.bean.LoginData
+import kim.bifrost.coldrain.wanandroid.repo.remote.bean.NetResponse
 import kim.bifrost.coldrain.wanandroid.repo.remote.bean.UserInfoData
 import retrofit2.Call
 import retrofit2.Response
@@ -24,7 +26,7 @@ interface ApiService {
     @POST("user/login")
     @FormUrlEncoded
     fun loginWanAndroid(@Field("username") username: String,
-                        @Field("password") password: String): Call<LoginData>
+                        @Field("password") password: String): Call<NetResponse<LoginData>>
 
     /**
      * 注册
@@ -37,7 +39,7 @@ interface ApiService {
     @FormUrlEncoded
     fun registerWanAndroid(@Field("username") username: String,
                            @Field("password") password: String,
-                           @Field("repassword") repassword: String): Call<LoginData>
+                           @Field("repassword") repassword: String): Call<NetResponse<LoginData>>
 
     /**
      * 获取用户信息，需要cookie
@@ -45,6 +47,17 @@ interface ApiService {
      * @return 用户信息
      */
     @GET("user/lg/userinfo/json")
-    fun getInfo(): Call<UserInfoData>
+    fun getInfo(): Call<NetResponse<UserInfoData>>
+
+    /**
+     * 获取Banner
+     *
+     * @return
+     */
+    @GET("banner/json")
+    fun getBanner(): Call<NetResponse<List<BannerData>>>
+
+//    @GET("article/list/0/json")
+//    fun getArticles()
 
 }

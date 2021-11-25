@@ -18,23 +18,30 @@
             android:layout_height="match_parent">
 
             <LinearLayout
-                android:orientation="vertical"
+                android:id="@+id/linearLayout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-                <include
-                    layout="@layout/toolbar"
-                    android:id="@+id/mainToolbar" />
-
-                <androidx.fragment.app.FragmentContainerView
+                <com.google.android.material.appbar.AppBarLayout
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="9" />
+                    android:layout_height="wrap_content">
+                    <include
+                        android:id="@+id/mainToolbar"
+                        layout="@layout/toolbar" />
+                </com.google.android.material.appbar.AppBarLayout>
 
                 <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/viewPager"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1" />
+
+                <com.google.android.material.bottomnavigation.BottomNavigationView
+                    android:id="@+id/bottomNav"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:menu="@menu/bottom_nav" />
 
             </LinearLayout>
 

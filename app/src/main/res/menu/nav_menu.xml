@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <group android:checkableBehavior="single">
+    <group android:checkableBehavior="none">
         <item
             android:id="@+id/myPoints"
             android:icon="@drawable/points"
@@ -18,7 +18,7 @@
             android:icon="@drawable/todo"
             android:title="TODO" />
         <item
-            android:id="@+id/settings"
+            android:id="@+id/setting"
             android:icon="@drawable/settings"
             android:title="系统设置" />
         <item

@@ -11,7 +11,7 @@ import androidx.databinding.ViewDataBinding
  * @author 寒雨
  * @since 2021/11/21 1:55
  **/
-abstract class BaseActivity<T : ViewDataBinding>() : AppCompatActivity() {
+abstract class BaseActivity<T : ViewDataBinding> : AppCompatActivity() {
 
     protected val binding: T by lazy {
         getViewBinding()
