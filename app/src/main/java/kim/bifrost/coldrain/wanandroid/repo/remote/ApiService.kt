@@ -1,11 +1,9 @@
 package kim.bifrost.coldrain.wanandroid.repo.remote
 
-import kim.bifrost.coldrain.wanandroid.repo.remote.bean.BannerData
-import kim.bifrost.coldrain.wanandroid.repo.remote.bean.LoginData
-import kim.bifrost.coldrain.wanandroid.repo.remote.bean.NetResponse
-import kim.bifrost.coldrain.wanandroid.repo.remote.bean.UserInfoData
+import kim.bifrost.coldrain.wanandroid.repo.remote.bean.*
 import retrofit2.Call
 import retrofit2.Response
+import retrofit2.await
 import retrofit2.http.*
 
 /**
@@ -57,7 +55,25 @@ interface ApiService {
     @GET("banner/json")
     fun getBanner(): Call<NetResponse<List<BannerData>>>
 
-//    @GET("article/list/0/json")
-//    fun getArticles()
+    /**
+     * 获取文章
+     *
+     * @param page 页数
+     * @param pageSize 每页的数量
+     * @return data
+     */
+    @GET("article/list/{page}/json")
+    fun getArticles(@Path("page") page: Int, @Query("page_size") pageSize: Int): Call<NetResponse<ArticlesData>>
 
+    @GET("article/top/json")
+    fun getTopArticles(): Call<NetResponse<List<ArticleData>>>
+
+    companion object {
+        suspend fun login(username: String, password: String) = RetrofitHelper.service.loginWanAndroid(username, password).await()
+        suspend fun register(username: String, password: String, repassword: String) = RetrofitHelper.service.registerWanAndroid(username, password, repassword).await()
+        suspend fun info() = RetrofitHelper.service.getInfo().await()
+        suspend fun banners() = RetrofitHelper.service.getBanner().await()
+        suspend fun articles(page: Int, pageSize: Int) = RetrofitHelper.service.getArticles(page, pageSize).await()
+        suspend fun topArticles() = RetrofitHelper.service.getTopArticles().await()
+    }
 }

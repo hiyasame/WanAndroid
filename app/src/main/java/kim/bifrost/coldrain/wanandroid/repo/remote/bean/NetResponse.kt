@@ -8,7 +8,7 @@ package kim.bifrost.coldrain.wanandroid.repo.remote.bean
  * @since 2021/11/26 0:02
  **/
 data class NetResponse<T>(
-    val data: T,
+    val data: T?,
     val errorCode: Int,
     val errorMsg: String
 ) {

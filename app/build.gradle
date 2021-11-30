@@ -38,6 +38,8 @@ android {
 }
 
 dependencies {
+    // Paging
+    implementation("androidx.paging:paging-runtime:3.0.1")
     // LifeCycle kt
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0"
     // 滑动刷新布局

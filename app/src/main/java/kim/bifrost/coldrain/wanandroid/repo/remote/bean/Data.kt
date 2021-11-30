@@ -1,7 +1,5 @@
 package kim.bifrost.coldrain.wanandroid.repo.remote.bean
 
-import com.google.gson.annotations.SerializedName
-
 /**
  * kim.bifrost.coldrain.wanandroid.api.bean.Data
  * WanAndroid
@@ -21,12 +19,12 @@ data class LoginData(
     val password: String,
     val token: String,
     val type: Int,
-    val username: String
+    val username: String,
 )
 
 data class UserInfoData(
     val coinInfo: CoinInfoData?,
-    val userInfo: LoginData
+    val userInfo: LoginData,
 ) {
     data class CoinInfoData(
         val coinCount: Int,
@@ -34,7 +32,7 @@ data class UserInfoData(
         val nickname: String,
         val rank: Int,
         val userId: Int,
-        val username: String
+        val username: String,
     )
 }
 
@@ -46,9 +44,58 @@ data class BannerData(
     val order: Int,
     val title: String,
     val type: Int,
-    val url: String
+    val url: String,
 )
 
-//data class ArticleData(
-//
-//)
+data class ArticlesData(
+    val curPage: Int,
+    val datas: List<ArticleData>
+)
+
+data class ArticleData(
+    val apkLink: String,
+    val audit: Int,
+    var author: String,
+    val canEdit: Boolean,
+    val chapterId: Int,
+    val chapterName: String,
+    val collect: Boolean,
+    val courseId: Int,
+    val desc: String,
+    val descMd: String,
+    val envelopePic: String,
+    val fresh: Boolean,
+    val host: String,
+    val id: Int,
+    val link: String,
+    val niceDate: String,
+    val niceShareDate: String,
+    val origin: String,
+    val prefix: String,
+    val projectLink: String,
+    val publishTime: Long,
+    val realSuperChapterId: Int,
+    val selfVisible: Int,
+    val shareDate: Long,
+    var shareUser: String,
+    val superChapterId: Int,
+    val superChapterName: String,
+    val tags: List<Tag>,
+    val title: String,
+    val type: Int,
+    val userId: Int,
+    val visible: Int,
+    val zan: Int,
+) {
+    data class Tag(
+        val name: String,
+        val url: String,
+    )
+}
+
+
+
+
+
+
+

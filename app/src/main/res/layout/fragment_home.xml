@@ -7,6 +7,10 @@
             name="viewModel"
             type="kim.bifrost.coldrain.wanandroid.viewmodel.frag.HomeFragViewModel" />
     </data>
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/srlHome"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
@@ -25,4 +29,6 @@
                 android:layout_weight="2" />
 
         </LinearLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
 </layout>

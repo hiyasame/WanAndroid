@@ -2,6 +2,7 @@ package kim.bifrost.coldrain.wanandroid.viewmodel
 
 import androidx.lifecycle.*
 import kim.bifrost.coldrain.wanandroid.repo.data.UserData
+import kim.bifrost.coldrain.wanandroid.repo.remote.ApiService
 import kim.bifrost.coldrain.wanandroid.repo.remote.RetrofitHelper
 import kim.bifrost.coldrain.wanandroid.utils.*
 import kotlinx.coroutines.Dispatchers
@@ -28,9 +29,7 @@ class LoginViewModel(var account: String?, var password: String?) : ViewModel() 
         }
         viewModelScope.launch(Dispatchers.IO) {
             kotlin.runCatching {
-                val service = RetrofitHelper.service
-                val response = service.loginWanAndroid(account!!, password!!).execute()
-                val data = response.body()!!
+                val data = ApiService.login(account!!, password!!)
                 data.errorMsg.isEmpty().elseThen {
                     // 登录失败逻辑
                     toastConcurrent(data.errorMsg)
@@ -40,7 +39,7 @@ class LoginViewModel(var account: String?, var password: String?) : ViewModel() 
                     // 登录成功逻辑
                     toastConcurrent("登录成功!")
                     UserData.isLogged = true
-                    UserData.userInfoData = service.getInfo().execute().body()!!.data
+                    UserData.userInfoData = ApiService.info().data
                     _loginLiveData.postValue(true)
                 }
             }.onFailure {

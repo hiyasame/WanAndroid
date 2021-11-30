@@ -1,10 +1,8 @@
 package kim.bifrost.coldrain.wanandroid.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.*
-import kim.bifrost.coldrain.wanandroid.App
 import kim.bifrost.coldrain.wanandroid.repo.data.UserData
-import kim.bifrost.coldrain.wanandroid.repo.remote.RetrofitHelper
+import kim.bifrost.coldrain.wanandroid.repo.remote.ApiService
 import kim.bifrost.coldrain.wanandroid.utils.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -35,9 +33,7 @@ class RegisterViewModel(
         }
         viewModelScope.launch(Dispatchers.IO) {
             kotlin.runCatching {
-                val service = RetrofitHelper.service
-                val response = service.registerWanAndroid(account!!, password!!, repassword!!).execute()
-                val data = response.body()!!
+                val data = ApiService.register(account!!, password!!, repassword!!)
                 data.errorMsg.isEmpty().elseThen {
                     // 注册失败逻辑
                     toastConcurrent(data.errorMsg)
@@ -47,8 +43,7 @@ class RegisterViewModel(
                     // 注册成功逻辑
                     toastConcurrent("注册成功!")
                     UserData.isLogged = true
-                    val call = service.getInfo().execute()
-                    UserData.userInfoData = call.body()!!.data
+                    UserData.userInfoData = ApiService.info().data
                     _registerLiveData.postValue(true)
                 }
             }.onFailure {

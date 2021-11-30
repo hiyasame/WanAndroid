@@ -3,6 +3,7 @@ package kim.bifrost.coldrain.wanandroid.view.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager.widget.PagerAdapter
 import com.bumptech.glide.Glide
 import kim.bifrost.coldrain.wanandroid.databinding.HomeVpItemBinding
 import kim.bifrost.coldrain.wanandroid.repo.remote.bean.BannerData
@@ -18,12 +19,14 @@ class HomeVPAdapter(
     val getItems: () -> List<BannerData>
 ) : RecyclerView.Adapter<HomeVPAdapter.Holder>() {
 
+    val items by lazy { getItems().toMutableList() }
+
     private var itemClickListener: (Int) -> Unit = { }
 
     inner class Holder(val binding: HomeVpItemBinding) : RecyclerView.ViewHolder(binding.root) {
         init {
             binding.root.setOnClickListener {
-                itemClickListener(adapterPosition)
+                itemClickListener(absoluteAdapterPosition % items.size)
             }
         }
     }
@@ -33,17 +36,24 @@ class HomeVPAdapter(
     }
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
-        val data = getItems()[position]
+        val data = items[position % items.size]
         // 使用Glide加载网络图片
         Glide.with(holder.itemView)
             .load(data.imagePath)
             .into(holder.binding.homeVpImg)
-        holder.binding.homeVpText.text = data.desc
+        holder.binding.homeVpText.text = data.title
     }
 
-    override fun getItemCount(): Int = getItems().size
+    override fun getItemCount(): Int = if (items.isEmpty()) 0 else Integer.MAX_VALUE
 
     fun setOnItemClickListener(func: (Int) -> Unit) {
         itemClickListener = func
+    }
+
+    fun flush() {
+        items.apply {
+            clear()
+            addAll(getItems())
+        }
     }
 }

@@ -71,6 +71,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                 binding.bottomNav.menu.getItem(position).isChecked = true
             }
         })
+        binding.viewPager.isUserInputEnabled = false
     }
 
     @SuppressLint("SetTextI18n")
@@ -89,7 +90,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         when (item.itemId) {
             R.id.query -> {
                 // TODO 搜索功能
-
             }
             // 点击home键显示滑动菜单
             android.R.id.home -> binding.drawerLayout.openDrawer(GravityCompat.START)
