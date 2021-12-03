@@ -49,7 +49,7 @@ data class BannerData(
 
 data class ArticlesData(
     val curPage: Int,
-    val datas: List<ArticleData>
+    val datas: List<ArticleData>,
 )
 
 data class ArticleData(
@@ -59,7 +59,7 @@ data class ArticleData(
     val canEdit: Boolean,
     val chapterId: Int,
     val chapterName: String,
-    val collect: Boolean,
+    var collect: Boolean,
     val courseId: Int,
     val desc: String,
     val descMd: String,
@@ -92,6 +92,48 @@ data class ArticleData(
         val url: String,
     )
 }
+
+data class CollectionData(
+    val curPage: Int,
+    val datas: List<SingleCollectionData>,
+    val offset: Int,
+    val over: Boolean,
+    val pageCount: Int,
+    val size: Int,
+    val total: Int,
+) {
+    data class SingleCollectionData(
+        val author: String,
+        val chapterId: Int,
+        val chapterName: String,
+        val courseId: Int,
+        val desc: String,
+        val envelopePic: String,
+        val id: Int,
+        val link: String,
+        val niceDate: String,
+        val origin: String,
+        val originId: Int,
+        val publishTime: Long,
+        val title: String,
+        val userId: Int,
+        val visible: Int,
+        val zan: Int
+    )
+}
+
+data class CollectedWebData(
+    val desc: String,
+    val icon: String,
+    val id: String,
+    val link: String,
+    val name: String,
+    val order: String,
+    val userId: String,
+    val visible: String
+)
+
+
 
 
 

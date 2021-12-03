@@ -15,21 +15,21 @@ import kotlinx.coroutines.withContext
  * @since 2021/11/29 19:38
  **/
 class HomePagingSource : PagingSource<Int, ArticleData>() {
-    override fun getRefreshKey(state: PagingState<Int, ArticleData>): Int {
-        return 0
+    override fun getRefreshKey(state: PagingState<Int, ArticleData>): Int? {
+        return null
     }
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, ArticleData> {
         val pos = params.key ?: START_INDEX
         return try {
             // Get data from DataSource
-                val pageList = PagingRepository.getArticlePages(pos)
-                // Return data to RecyclerView by LoadResult
-                LoadResult.Page(
-                    pageList,
-                    if (pos <= START_INDEX) null else pos - 1,
-                    if (pageList.isEmpty()) null else pos + 1
-                )
+            val pageList = PagingRepository.getArticlePages(pos)
+            // Return data to RecyclerView by LoadResult
+            LoadResult.Page(
+                pageList,
+                if (pos <= START_INDEX) null else pos - 1,
+                if (pageList.isEmpty()) null else pos + 1
+            )
         } catch (exception: Exception) {
             // Return exception by LoadResult
             LoadResult.Error(exception)

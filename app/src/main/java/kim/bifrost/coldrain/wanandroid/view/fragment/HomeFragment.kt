@@ -1,11 +1,8 @@
 package kim.bifrost.coldrain.wanandroid.view.fragment
 
 import android.annotation.SuppressLint
-import android.app.Dialog
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
@@ -55,7 +52,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         binding.viewModel = ViewModelProvider(this)[HomeFragViewModel::class.java]
         // 在网络操作完毕后刷新ViewPager页面显示
         binding.viewModel?.updater?.observe(viewLifecycleOwner) {
-            Log.d("Test", "(HomeFragment.kt:58) ==> Execute")
             // 设置一个比较靠前的位置使其可以向前滑动
             binding.vpHome.endFakeDrag()
             binding.vpHome.currentItem = 4000

@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.MenuItem
 import androidx.lifecycle.ViewModelProvider
 import kim.bifrost.coldrain.wanandroid.databinding.ActivityLoginBinding
+import kim.bifrost.coldrain.wanandroid.repo.remote.RetrofitHelper
 import kim.bifrost.coldrain.wanandroid.viewmodel.LoginViewModel
 
 class LoginActivity : BaseActivity<ActivityLoginBinding>() {

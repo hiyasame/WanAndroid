@@ -2,4 +2,18 @@
     <string name="app_name">WanAndroid</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="user_login">用户登录</string>
+    <string name="user_login_info">请使用WanAndroid账号登录!</string>
+    <string name="username_hint">用户名</string>
+    <string name="userpass_hint">密码</string>
+    <string name="login_button">登录</string>
+    <string name="register_text">没有账号?去注册</string>
+    <string name="text_no_collection">暂无数据</string>
+    <string name="user_register">注册用户</string>
+    <string name="user_register_info">用户注册后才可以登录!</string>
+    <string name="user_repassword_hint">确认密码</string>
+    <string name="register_button">注册</string>
+    <string name="login_text">已有账户？去登录</string>
+    <string name="goto_login">去登录</string>
+    <string name="def_level">等级: -- 排名: --</string>
 </resources>

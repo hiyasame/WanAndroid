@@ -3,7 +3,6 @@ package kim.bifrost.coldrain.wanandroid.view.adapter
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
@@ -13,8 +12,15 @@ import kim.bifrost.coldrain.wanandroid.App
 import kim.bifrost.coldrain.wanandroid.R
 import kim.bifrost.coldrain.wanandroid.databinding.HomeRvItemBinding
 import kim.bifrost.coldrain.wanandroid.repo.data.UserData
+import kim.bifrost.coldrain.wanandroid.repo.remote.ApiService
 import kim.bifrost.coldrain.wanandroid.repo.remote.bean.ArticleData
+import kim.bifrost.coldrain.wanandroid.utils.toast
+import kim.bifrost.coldrain.wanandroid.utils.toastConcurrent
+import kim.bifrost.coldrain.wanandroid.view.activity.LoginActivity
 import kim.bifrost.coldrain.wanandroid.view.activity.WebPageActivity
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 /**
  * kim.bifrost.coldrain.wanandroid.view.adapter.HomePagingDataAdpater
@@ -28,9 +34,6 @@ class HomePagingDataAdapter(private val context: Context) :
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: Holder, position: Int) {
-        if (position < 0) {
-            return
-        }
         val data = getItem(position)!!
         val binding = holder.binding
         binding.homeRvTitle.text = data.title
@@ -39,11 +42,10 @@ class HomePagingDataAdapter(private val context: Context) :
         binding.homeRvLabel.text = data.superChapterName + "/" + data.chapterName
         binding.homeButtonLike.apply {
             if (data.collect) {
-                // TODO 收藏操作
+                data.collect = false
                 setImageResource(R.drawable.ic_like)
-                setColorFilter(Color.parseColor("#FA9797"))
+                setColorFilter(Color.parseColor("#CDF68A8A"))
             } else {
-                // TODO 取消收藏操作
                 setImageResource(R.drawable.ic_not_like)
                 clearColorFilter()
             }
@@ -65,13 +67,37 @@ class HomePagingDataAdapter(private val context: Context) :
                     val data = getItem(absoluteAdapterPosition)!!
                     binding.homeButtonLike.apply {
                         if (data.collect) {
-                            setImageResource(R.drawable.ic_not_like)
-                            clearColorFilter()
+                            App.coroutineScope.launch(Dispatchers.IO) {
+                                ApiService.uncollect(data.id).ifSuccess {
+                                    withContext(Dispatchers.Main) {
+                                        toast("已取消收藏")
+                                        data.collect = false
+                                        setImageResource(R.drawable.ic_not_like)
+                                        clearColorFilter()
+                                        refresh()
+                                    }
+                                }.ifFailure {
+                                    toastConcurrent("网络请求失败: $it")
+                                }
+                            }
                         } else {
-                            setImageResource(R.drawable.ic_like)
-                            setColorFilter(Color.parseColor("#FA9797"))
+                            App.coroutineScope.launch(Dispatchers.IO) {
+                                ApiService.collect(data.id).ifSuccess {
+                                    withContext(Dispatchers.Main) {
+                                        toastConcurrent("已收藏")
+                                        data.collect = true
+                                        setImageResource(R.drawable.ic_like)
+                                        setColorFilter(Color.parseColor("#CDF68A8A"))
+                                        refresh()
+                                    }
+                                }.ifFailure {
+                                    toastConcurrent("网络请求失败: $it")
+                                }
+                            }
                         }
                     }
+                } else {
+                    LoginActivity.start(context)
                 }
             }
         }

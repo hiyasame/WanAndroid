@@ -14,12 +14,14 @@
         android:background="@color/design_default_color_primary"
         android:padding="10dp">
 
-        <de.hdodenhof.circleimageview.CircleImageView
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/userIcon"
-            android:src="@drawable/user"
-            app:civ_circle_background_color="@color/white"
-            app:civ_border_color="#B6B4B4"
-            app:civ_border_width="1dp"
+            android:src="@drawable/ic_user"
+            app:shapeAppearance="@style/CircleStyle"
+            app:strokeColor="#353434"
+            app:strokeWidth="2dp"
+            android:padding="1dp"
+            android:backgroundTint="@color/design_default_color_primary"
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:layout_gravity="center"
@@ -30,7 +32,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:text="去登录"
+            android:text="@string/goto_login"
             android:textStyle="bold"
             android:textSize="15sp"
             android:layout_gravity="center"
@@ -41,7 +43,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="1dp"
-            android:text="等级: -- 排名: --"
+            android:text="@string/def_level"
             android:layout_gravity="center"
             android:textColor="@color/white" />
 

@@ -65,8 +65,63 @@ interface ApiService {
     @GET("article/list/{page}/json")
     fun getArticles(@Path("page") page: Int, @Query("page_size") pageSize: Int): Call<NetResponse<ArticlesData>>
 
+    /**
+     * 获取置顶文章
+     *
+     * @return data
+     */
     @GET("article/top/json")
     fun getTopArticles(): Call<NetResponse<List<ArticleData>>>
+
+    /**
+     * 获取用户个人收藏文章
+     * 需要Cookie
+     *
+     * @param page 页数
+     * @param pageSize 每页数量
+     * @return data
+     */
+    @GET("lg/collect/list/{page}/json")
+    fun getCollections(@Path("page") page: Int, @Query("page_size") pageSize: Int): Call<NetResponse<CollectionData>>
+
+
+    /**
+     * 收藏文章
+     * 需要Cookie
+     * errorCode为0即成功
+     * 反之则失败
+     *
+     * @param id 文章站内id
+     * @return data
+     */
+    @POST("lg/collect/{id}/json")
+    fun collectArticle(@Path("id") id: Int): Call<NetResponse<Any?>>
+
+    /**
+     * 收藏站外文章
+     * 需要Cookie
+     * errorCode为0即成功
+     * 反之则失败
+     *
+     * @param id 文章站内id
+     * @return
+     */
+    @POST("lg/collect/user_article/update/{id}/json")
+    fun collectWebArticle(
+        @Path("id") id: Int,
+        @Query("title") title: String,
+        @Query("link") link: String,
+        @Query("author") author: String
+    ): Call<NetResponse<Any?>>
+
+    /**
+     * 取消收藏
+     *
+     * @param id id
+     * @return
+     */
+    @POST("/lg/uncollect_originId/{id}/json")
+    fun unCollectArticle(@Path("id") id: Int): Call<NetResponse<Any?>>
 
     companion object {
         suspend fun login(username: String, password: String) = RetrofitHelper.service.loginWanAndroid(username, password).await()
@@ -75,5 +130,8 @@ interface ApiService {
         suspend fun banners() = RetrofitHelper.service.getBanner().await()
         suspend fun articles(page: Int, pageSize: Int) = RetrofitHelper.service.getArticles(page, pageSize).await()
         suspend fun topArticles() = RetrofitHelper.service.getTopArticles().await()
+        suspend fun collections(page: Int, pageSize: Int) = RetrofitHelper.service.getCollections(page, pageSize).await()
+        suspend fun collect(id: Int) = RetrofitHelper.service.collectArticle(id).await()
+        suspend fun uncollect(id: Int) = RetrofitHelper.service.unCollectArticle(id).await()
     }
 }

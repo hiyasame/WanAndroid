@@ -22,7 +22,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="用户登录"
+            android:text="@string/user_login"
             android:textSize="18sp"
             android:textColor="@color/black"
             android:layout_marginTop="30dp"
@@ -32,7 +32,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="请使用WanAndroid账号登录!"
+            android:text="@string/user_login_info"
             android:layout_marginBottom="20dp"
             android:layout_marginStart="20dp" />
 
@@ -56,7 +56,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@={viewModel.account}"
-                    android:hint="用户名"
+                    android:hint="@string/username_hint"
                     android:inputType="textEmailAddress" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -75,14 +75,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@={viewModel.password}"
-                    android:hint="密码"
+                    android:hint="@string/userpass_hint"
                     android:inputType="textPassword" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/buttonLogin"
                 app:cornerRadius="10dp"
-                android:text="登录"
+                android:text="@string/login_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
@@ -91,7 +91,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="没有账号?去注册"
+                android:text="@string/register_text"
                 android:layout_gravity="end" />
 
         </LinearLayout>

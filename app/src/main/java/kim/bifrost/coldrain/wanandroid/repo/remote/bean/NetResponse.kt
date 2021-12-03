@@ -13,4 +13,18 @@ data class NetResponse<T>(
     val errorMsg: String
 ) {
     fun success(): Boolean = errorCode == 0
+
+    inline fun ifSuccess(func: () -> Unit): NetResponse<T> {
+        if (success()) {
+            func()
+        }
+        return this
+    }
+
+    inline fun ifFailure(func: (String) -> Unit): NetResponse<T> {
+        if (!success()) {
+            func(errorMsg)
+        }
+        return this
+    }
 }

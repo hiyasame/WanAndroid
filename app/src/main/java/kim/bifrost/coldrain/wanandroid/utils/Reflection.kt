@@ -87,7 +87,7 @@ fun <T> Class<*>.invokeStatic(path: String, vararg args: Any?): T? {
     return invokeMethod(path, args)
 }
 
-class ReflectClass(val clazz: Class<*>) {
+class ReflectClass(private val clazz: Class<*>) {
     // 超类缓存
     private var superclass: ReflectClass? = null
     // 接口缓存
@@ -207,7 +207,7 @@ class ReflectClass(val clazz: Class<*>) {
         }
     }
     companion object {
-        val savingClass = ConcurrentHashMap<String, ReflectClass>()
+        private val savingClass = ConcurrentHashMap<String, ReflectClass>()
 
         fun find(clazz: Class<*>): ReflectClass {
             if (!savingClass.containsKey(clazz.name)) {

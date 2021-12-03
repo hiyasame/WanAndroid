@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.cardview.widget.CardView
+        app:cardCornerRadius="6dp"
+        android:orientation="vertical"
+        android:layout_marginHorizontal="8dp"
+        android:layout_marginVertical="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:padding="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="100dp">
+
+            <TextView
+                android:id="@+id/author"
+                tools:text="扔物线"
+                android:textSize="11sp"
+                android:layout_marginBottom="6sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/time"
+                tools:text="刚刚"
+                android:textSize="11sp"
+                android:layout_alignParentEnd="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:ignore="RelativeOverlap" />
+
+            <TextView
+                android:id="@+id/type"
+                tools:text="干货资源"
+                android:textSize="11sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true" />
+
+            <TextView
+                android:id="@+id/title"
+                android:textSize="15sp"
+                android:textColor="@color/black"
+                tools:text="给高级 Android 工程师的进阶手册"
+                android:layout_below="@+id/author"
+                android:layout_marginTop="6dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:id="@+id/collect"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:src="@drawable/ic_like"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                app:tint="#CDF68A8A" />
+
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+</layout>

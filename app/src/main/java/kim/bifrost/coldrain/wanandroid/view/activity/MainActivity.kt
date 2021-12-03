@@ -1,6 +1,7 @@
 package kim.bifrost.coldrain.wanandroid.view.activity
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -9,12 +10,14 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.view.GravityCompat
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kim.bifrost.coldrain.wanandroid.App
 import kim.bifrost.coldrain.wanandroid.R
 import kim.bifrost.coldrain.wanandroid.databinding.ActivityMainBinding
 import kim.bifrost.coldrain.wanandroid.repo.data.UserData
+import kim.bifrost.coldrain.wanandroid.repo.remote.RetrofitHelper
 import kim.bifrost.coldrain.wanandroid.utils.then
 import kim.bifrost.coldrain.wanandroid.utils.toast
 import kim.bifrost.coldrain.wanandroid.view.adapter.MainViewPagerAdapter
@@ -42,11 +45,22 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             }
         binding.navView.setNavigationItemSelectedListener {
             when (it.itemId) {
+                // 登出
                 R.id.logout -> {
                     Log.d("Test", "Test")
                     binding.viewModel?.logout()
                     reloadLoginStatus()
                     toast("注销成功")
+                }
+                // 收藏
+                R.id.myCollections -> {
+                    // 登录则进入界面
+                    if (UserData.isLogged) {
+                        startActivity(Intent(this, CollectActivity::class.java))
+                    } else {
+                        // 未登录则进入登录界面
+                        LoginActivity.start(this)
+                    }
                 }
             }
             true
