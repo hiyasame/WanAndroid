@@ -15,5 +15,5 @@
     <string name="register_button">注册</string>
     <string name="login_text">已有账户？去登录</string>
     <string name="goto_login">去登录</string>
-    <string name="def_level">等级: -- 排名: --</string>
+    <string name="def_level">等级: —- 排名: —-</string>
 </resources>

@@ -7,33 +7,36 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.TextView
-import android.widget.Toast
 import androidx.core.view.GravityCompat
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kim.bifrost.coldrain.wanandroid.App
 import kim.bifrost.coldrain.wanandroid.R
+import kim.bifrost.coldrain.wanandroid.base.BaseActivity
+import kim.bifrost.coldrain.wanandroid.base.BaseVMActivity
 import kim.bifrost.coldrain.wanandroid.databinding.ActivityMainBinding
 import kim.bifrost.coldrain.wanandroid.repo.data.UserData
-import kim.bifrost.coldrain.wanandroid.repo.remote.RetrofitHelper
 import kim.bifrost.coldrain.wanandroid.utils.then
 import kim.bifrost.coldrain.wanandroid.utils.toast
+import kim.bifrost.coldrain.wanandroid.view.adapter.HomeVPAdapter
 import kim.bifrost.coldrain.wanandroid.view.adapter.MainViewPagerAdapter
-import kim.bifrost.coldrain.wanandroid.viewmodel.MainViewModel
+import kim.bifrost.coldrain.wanandroid.view.viewmodel.MainViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class MainActivity : BaseActivity<ActivityMainBinding>() {
+class MainActivity : BaseVMActivity<MainViewModel, ActivityMainBinding>(isCancelStatusBar = false) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setSupportActionBar(binding.mainToolbar.toolbar)
-        binding.viewModel = ViewModelProvider(this)[MainViewModel::class.java]
+        // Toolbar
         supportActionBar?.let {
             it.setDisplayHomeAsUpEnabled(true)
             it.setHomeAsUpIndicator(R.drawable.ic_menu)
         }
+        // 侧滑栏
         // 设置HeaderLayout中元素点击事件
         binding.navView.getHeaderView(0)
             .findViewById<TextView>(R.id.userName)
@@ -48,7 +51,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                 // 登出
                 R.id.logout -> {
                     Log.d("Test", "Test")
-                    binding.viewModel?.logout()
+                    viewModel.logout()
                     reloadLoginStatus()
                     toast("注销成功")
                 }
@@ -65,6 +68,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             }
             true
         }
+        // BottomNav
         binding.bottomNav.apply {
             labelVisibilityMode = BottomNavigationView.LABEL_VISIBILITY_LABELED
             setOnItemSelectedListener {
@@ -78,6 +82,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                 true
             }
         }
+        // ViewPager2 相关逻辑
         binding.viewPager.adapter = MainViewPagerAdapter(this)
         binding.viewPager.registerOnPageChangeCallback (object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
@@ -86,6 +91,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             }
         })
         binding.viewPager.isUserInputEnabled = false
+        // FAB 相关逻辑
+        binding.floatingActionBtn.setOnClickListener {
+
+        }
     }
 
     @SuppressLint("SetTextI18n")
@@ -126,5 +135,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                     else "去登录"
                 }
         }
+    }
+
+    // 将当前ViewPager2显示的fragment滑动至最顶端
+    private fun scrollToTop() {
+
     }
 }

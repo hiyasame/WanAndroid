@@ -1,4 +1,4 @@
-package kim.bifrost.coldrain.wanandroid.view.fragment
+package kim.bifrost.coldrain.wanandroid.base
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,7 +8,7 @@ import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 
 /**
- * kim.bifrost.coldrain.wanandroid.view.fragment.BaseFragment
+ * kim.bifrost.coldrain.wanandroid.base.BaseFragment
  * WanAndroid
  *
  * @author 寒雨
@@ -29,5 +29,7 @@ abstract class BaseFragment<T: ViewDataBinding> : Fragment() {
     }
 
     abstract fun getViewBinding(inflater: LayoutInflater, container: ViewGroup?, boolean: Boolean): T
+
+    open fun scrollToTop() {}
 
 }

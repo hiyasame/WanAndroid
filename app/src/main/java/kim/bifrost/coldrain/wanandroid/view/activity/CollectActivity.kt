@@ -6,19 +6,22 @@ import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
-import androidx.paging.filter
 import androidx.recyclerview.widget.LinearLayoutManager
+import kim.bifrost.coldrain.wanandroid.base.BaseVMActivity
 import kim.bifrost.coldrain.wanandroid.databinding.ActivityCollectBinding
+import kim.bifrost.coldrain.wanandroid.repo.remote.ApiService
 import kim.bifrost.coldrain.wanandroid.utils.toast
+import kim.bifrost.coldrain.wanandroid.utils.toastConcurrent
 import kim.bifrost.coldrain.wanandroid.view.adapter.CollectPagingDataAdapter
-import kim.bifrost.coldrain.wanandroid.viewmodel.CollectViewModel
+import kim.bifrost.coldrain.wanandroid.view.viewmodel.CollectViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
-class CollectActivity : BaseActivity<ActivityCollectBinding>() {
+class CollectActivity : BaseVMActivity<CollectViewModel, ActivityCollectBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding.viewModel = ViewModelProvider(this)[CollectViewModel::class.java]
         binding.collectToolbar.toolbar.apply {
             setSupportActionBar(this)
             supportActionBar?.let {
@@ -26,13 +29,17 @@ class CollectActivity : BaseActivity<ActivityCollectBinding>() {
                 it.title = "收藏"
             }
         }
-        val adapter = CollectPagingDataAdapter(this)
+        val adapter = CollectPagingDataAdapter(this) {
+            viewModel.uncollect(it) {
+                refresh()
+            }
+        }
         binding.rvCollect.apply {
             layoutManager = LinearLayoutManager(this@CollectActivity)
             this.adapter = adapter
         }
         lifecycleScope.launch {
-            binding.viewModel?.collections?.collectLatest {
+            viewModel.collections.collectLatest {
                 adapter.submitData(it)
             }
         }

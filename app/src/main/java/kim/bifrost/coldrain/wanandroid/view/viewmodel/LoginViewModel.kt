@@ -1,15 +1,14 @@
-package kim.bifrost.coldrain.wanandroid.viewmodel
+package kim.bifrost.coldrain.wanandroid.view.viewmodel
 
 import androidx.lifecycle.*
 import kim.bifrost.coldrain.wanandroid.repo.data.UserData
 import kim.bifrost.coldrain.wanandroid.repo.remote.ApiService
-import kim.bifrost.coldrain.wanandroid.repo.remote.RetrofitHelper
 import kim.bifrost.coldrain.wanandroid.utils.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 /**
- * kim.bifrost.coldrain.wanandroid.viewmodel.LoginViewModel
+ * kim.bifrost.coldrain.wanandroid.view.viewmodel.LoginViewModel
  * WanAndroid
  *
  * @author 寒雨

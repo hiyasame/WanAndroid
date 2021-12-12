@@ -1,5 +1,6 @@
-package kim.bifrost.coldrain.wanandroid.viewmodel.frag
+package kim.bifrost.coldrain.wanandroid.view.viewmodel.frag
 
+import android.widget.ImageView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -16,7 +17,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 /**
- * kim.bifrost.coldrain.wanandroid.viewmodel.frag.HomeFragViewModel
+ * kim.bifrost.coldrain.wanandroid.view.viewmodel.frag.HomeFragViewModel
  * WanAndroid
  *
  * @author 寒雨
@@ -52,4 +53,9 @@ class HomeFragViewModel : ViewModel() {
             }
         }
     }
+
+    fun collectOrNot() {
+
+    }
+
 }

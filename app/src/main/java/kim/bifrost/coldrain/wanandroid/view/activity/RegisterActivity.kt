@@ -5,8 +5,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.lifecycle.ViewModelProvider
+import kim.bifrost.coldrain.wanandroid.base.BaseActivity
 import kim.bifrost.coldrain.wanandroid.databinding.ActivityRegisterBinding
-import kim.bifrost.coldrain.wanandroid.viewmodel.RegisterViewModel
+import kim.bifrost.coldrain.wanandroid.view.viewmodel.RegisterViewModel
 
 class RegisterActivity : BaseActivity<ActivityRegisterBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {

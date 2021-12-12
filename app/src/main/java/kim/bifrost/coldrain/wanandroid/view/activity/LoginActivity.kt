@@ -5,9 +5,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.lifecycle.ViewModelProvider
+import kim.bifrost.coldrain.wanandroid.base.BaseActivity
 import kim.bifrost.coldrain.wanandroid.databinding.ActivityLoginBinding
-import kim.bifrost.coldrain.wanandroid.repo.remote.RetrofitHelper
-import kim.bifrost.coldrain.wanandroid.viewmodel.LoginViewModel
+import kim.bifrost.coldrain.wanandroid.view.viewmodel.LoginViewModel
 
 class LoginActivity : BaseActivity<ActivityLoginBinding>() {
 

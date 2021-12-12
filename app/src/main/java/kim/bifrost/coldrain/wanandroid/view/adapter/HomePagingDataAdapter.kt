@@ -4,13 +4,18 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.widget.ViewPager2
 import kim.bifrost.coldrain.wanandroid.App
 import kim.bifrost.coldrain.wanandroid.R
 import kim.bifrost.coldrain.wanandroid.databinding.HomeRvItemBinding
+import kim.bifrost.coldrain.wanandroid.databinding.HomeVpBinding
 import kim.bifrost.coldrain.wanandroid.repo.data.UserData
 import kim.bifrost.coldrain.wanandroid.repo.remote.ApiService
 import kim.bifrost.coldrain.wanandroid.repo.remote.bean.ArticleData
@@ -29,76 +34,98 @@ import kotlinx.coroutines.withContext
  * @author 寒雨
  * @since 2021/11/28 0:54
  **/
-class HomePagingDataAdapter(private val context: Context) :
+class HomePagingDataAdapter(private val context: Context, val bindHeader: HomeVpBinding.() -> Unit) :
     PagingDataAdapter<ArticleData, HomePagingDataAdapter.Holder>(HomeRvItemCallBack()) {
+
+    lateinit var headerBinding: HomeVpBinding
+
+    lateinit var lastItemBinding: HomeRvItemBinding
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: Holder, position: Int) {
+        if (getItemViewType(position) == 0) {
+            // 回调
+            bindHeader(headerBinding)
+            return
+        }
         val data = getItem(position)!!
-        val binding = holder.binding
-        binding.homeRvTitle.text = data.title
-        binding.homeRvDate.text = data.niceDate
-        binding.homeRvHead.text = if (data.author.isEmpty()) data.shareUser else data.author
-        binding.homeRvLabel.text = data.superChapterName + "/" + data.chapterName
-        binding.homeButtonLike.apply {
-            if (data.collect) {
-                data.collect = false
-                setImageResource(R.drawable.ic_like)
-                setColorFilter(Color.parseColor("#CDF68A8A"))
-            } else {
-                setImageResource(R.drawable.ic_not_like)
-                clearColorFilter()
+        holder.view.apply {
+            findViewById<TextView>(R.id.homeRvTitle).text = data.title
+            findViewById<TextView>(R.id.homeRvDate).text = data.niceDate
+            findViewById<TextView>(R.id.homeRvHead).text = if (data.author.isEmpty()) data.shareUser else data.author
+            findViewById<TextView>(R.id.homeRvLabel).text = data.superChapterName + "/" + data.chapterName
+            findViewById<ImageView>(R.id.homeButtonLike).apply {
+                if (data.collect) {
+                    data.collect = true
+                    setImageResource(R.drawable.ic_like)
+                    setColorFilter(Color.parseColor("#CDF68A8A"))
+                } else {
+                    data.collect = false
+                    setImageResource(R.drawable.ic_not_like)
+                    clearColorFilter()
+                }
             }
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
-        return Holder(HomeRvItemBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+        if (viewType == 0) {
+            return Holder(HomeVpBinding.inflate(LayoutInflater.from(parent.context), parent, false).apply { headerBinding = this }.root)
+        }
+        return Holder(HomeRvItemBinding.inflate(LayoutInflater.from(parent.context), parent, false).apply { lastItemBinding = this }.root)
     }
 
-    inner class Holder(val binding: HomeRvItemBinding) : RecyclerView.ViewHolder(binding.root) {
+    override fun getItemViewType(position: Int): Int {
+        if (position == 0) return 0
+        return 1
+    }
+
+    inner class Holder(val view: View) : RecyclerView.ViewHolder(view) {
         init {
-            binding.root.setOnClickListener {
-                val data = getItem(absoluteAdapterPosition)!!
-                WebPageActivity.startActivity(context, data.link, data.title)
-            }
-            binding.homeButtonLike.setOnClickListener {
-                if (UserData.isLogged) {
+            if (view !is ViewPager2) {
+                view.setOnClickListener {
                     val data = getItem(absoluteAdapterPosition)!!
-                    binding.homeButtonLike.apply {
-                        if (data.collect) {
-                            App.coroutineScope.launch(Dispatchers.IO) {
-                                ApiService.uncollect(data.id).ifSuccess {
-                                    withContext(Dispatchers.Main) {
-                                        toast("已取消收藏")
-                                        data.collect = false
-                                        setImageResource(R.drawable.ic_not_like)
-                                        clearColorFilter()
-                                        refresh()
+                    WebPageActivity.startActivity(context, data.link, data.title)
+                }
+                view.findViewById<ImageView>(R.id.homeButtonLike)
+                    .setOnClickListener {
+                        if (UserData.isLogged) {
+                            val data = getItem(absoluteAdapterPosition)!!
+                            it.apply {
+                                if (data.collect) {
+                                    App.coroutineScope.launch(Dispatchers.IO) {
+                                        ApiService.uncollect(data.id).ifSuccess {
+                                            withContext(Dispatchers.Main) {
+                                                toast("已取消收藏")
+                                                data.collect = false
+                                                (it as ImageView).setImageResource(R.drawable.ic_not_like)
+                                                it.clearColorFilter()
+                                                refresh()
+                                            }
+                                        }.ifFailure {
+                                            toastConcurrent("网络请求失败: $it")
+                                        }
                                     }
-                                }.ifFailure {
-                                    toastConcurrent("网络请求失败: $it")
+                                } else {
+                                    App.coroutineScope.launch(Dispatchers.IO) {
+                                        ApiService.collect(data.id).ifSuccess {
+                                            withContext(Dispatchers.Main) {
+                                                toastConcurrent("已收藏")
+                                                data.collect = true
+                                                (it as ImageView).setImageResource(R.drawable.ic_like)
+                                                it.setColorFilter(Color.parseColor("#CDF68A8A"))
+                                                refresh()
+                                            }
+                                        }.ifFailure {
+                                            toastConcurrent("网络请求失败: $it")
+                                        }
+                                    }
                                 }
                             }
                         } else {
-                            App.coroutineScope.launch(Dispatchers.IO) {
-                                ApiService.collect(data.id).ifSuccess {
-                                    withContext(Dispatchers.Main) {
-                                        toastConcurrent("已收藏")
-                                        data.collect = true
-                                        setImageResource(R.drawable.ic_like)
-                                        setColorFilter(Color.parseColor("#CDF68A8A"))
-                                        refresh()
-                                    }
-                                }.ifFailure {
-                                    toastConcurrent("网络请求失败: $it")
-                                }
-                            }
+                            LoginActivity.start(context)
                         }
                     }
-                } else {
-                    LoginActivity.start(context)
-                }
             }
         }
     }

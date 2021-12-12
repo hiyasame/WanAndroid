@@ -1,10 +1,10 @@
-package kim.bifrost.coldrain.wanandroid.viewmodel
+package kim.bifrost.coldrain.wanandroid.view.viewmodel
 
 import androidx.lifecycle.ViewModel
 import kim.bifrost.coldrain.wanandroid.repo.data.UserData
 
 /**
- * kim.bifrost.coldrain.wanandroid.viewmodel.MainViewModel
+ * kim.bifrost.coldrain.wanandroid.view.viewmodel.MainViewModel
  * WanAndroid
  *
  * @author 寒雨

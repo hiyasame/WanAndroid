@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="kim.bifrost.coldrain.wanandroid.viewmodel.LoginViewModel" />
+            type="kim.bifrost.coldrain.wanandroid.view.viewmodel.LoginViewModel" />
     </data>
 
     <LinearLayout

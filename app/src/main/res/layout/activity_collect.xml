@@ -4,9 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <variable
-            name="viewModel"
-            type="kim.bifrost.coldrain.wanandroid.viewmodel.CollectViewModel" />
+
     </data>
 
     <LinearLayout

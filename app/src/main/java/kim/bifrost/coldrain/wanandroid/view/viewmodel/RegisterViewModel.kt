@@ -1,4 +1,4 @@
-package kim.bifrost.coldrain.wanandroid.viewmodel
+package kim.bifrost.coldrain.wanandroid.view.viewmodel
 
 import androidx.lifecycle.*
 import kim.bifrost.coldrain.wanandroid.repo.data.UserData
@@ -8,7 +8,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 /**
- * kim.bifrost.coldrain.wanandroid.viewmodel.RegisterViewModel
+ * kim.bifrost.coldrain.wanandroid.view.viewmodel.RegisterViewModel
  * WanAndroid
  *
  * @author 寒雨
