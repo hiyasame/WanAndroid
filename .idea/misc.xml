@@ -10,12 +10,14 @@
         <entry key="..\:/ColdRain_Moro/AndroidProject/WanAndroid/app/src/main/res/drawable/ic_user.xml" value="0.26979166666666665" />
         <entry key="..\:/ColdRain_Moro/AndroidProject/WanAndroid/app/src/main/res/layout/activity_collect.xml" value="0.4" />
         <entry key="..\:/ColdRain_Moro/AndroidProject/WanAndroid/app/src/main/res/layout/activity_login.xml" value="0.16621376811594202" />
-        <entry key="..\:/ColdRain_Moro/AndroidProject/WanAndroid/app/src/main/res/layout/activity_main.xml" value="0.6" />
+        <entry key="..\:/ColdRain_Moro/AndroidProject/WanAndroid/app/src/main/res/layout/activity_main.xml" value="0.42311033883579496" />
         <entry key="..\:/ColdRain_Moro/AndroidProject/WanAndroid/app/src/main/res/layout/activity_register.xml" value="0.12335359675785208" />
         <entry key="..\:/ColdRain_Moro/AndroidProject/WanAndroid/app/src/main/res/layout/activity_web_page.xml" value="0.2151268115942029" />
         <entry key="..\:/ColdRain_Moro/AndroidProject/WanAndroid/app/src/main/res/layout/collect_rv_item.xml" value="0.343921139101862" />
-        <entry key="..\:/ColdRain_Moro/AndroidProject/WanAndroid/app/src/main/res/layout/fragment_find.xml" value="0.24365942028985507" />
+        <entry key="..\:/ColdRain_Moro/AndroidProject/WanAndroid/app/src/main/res/layout/find_rv_item.xml" value="0.500772797527048" />
+        <entry key="..\:/ColdRain_Moro/AndroidProject/WanAndroid/app/src/main/res/layout/fragment_find.xml" value="0.1" />
         <entry key="..\:/ColdRain_Moro/AndroidProject/WanAndroid/app/src/main/res/layout/fragment_home.xml" value="0.264" />
+        <entry key="..\:/ColdRain_Moro/AndroidProject/WanAndroid/app/src/main/res/layout/fragment_inner_wechat.xml" value="0.21693840579710144" />
         <entry key="..\:/ColdRain_Moro/AndroidProject/WanAndroid/app/src/main/res/layout/fragment_project.xml" value="0.2391304347826087" />
         <entry key="..\:/ColdRain_Moro/AndroidProject/WanAndroid/app/src/main/res/layout/fragment_system.xml" value="0.2391304347826087" />
         <entry key="..\:/ColdRain_Moro/AndroidProject/WanAndroid/app/src/main/res/layout/fragment_wechat.xml" value="0.24365942028985507" />

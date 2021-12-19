@@ -11,6 +11,6 @@ class ProjectFragment : BaseFragment<FragmentSystemBinding>() {
     override fun getViewBinding(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        boolean: Boolean
+        boolean: Boolean,
     ): FragmentSystemBinding = FragmentSystemBinding.inflate(inflater, container, false)
 }

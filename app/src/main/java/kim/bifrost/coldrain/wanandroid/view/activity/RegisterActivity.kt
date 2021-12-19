@@ -12,7 +12,8 @@ import kim.bifrost.coldrain.wanandroid.view.viewmodel.RegisterViewModel
 class RegisterActivity : BaseActivity<ActivityRegisterBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding.viewModel = ViewModelProvider(this, RegisterViewModel.Factory("", "", ""))[RegisterViewModel::class.java]
+        binding.viewModel = ViewModelProvider(this,
+            RegisterViewModel.Factory("", "", ""))[RegisterViewModel::class.java]
         binding.registerToolbar.toolbar.apply {
             setSupportActionBar(this)
             supportActionBar?.let {
@@ -34,7 +35,8 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding>() {
         }
     }
 
-    override fun getViewBinding(): ActivityRegisterBinding = ActivityRegisterBinding.inflate(layoutInflater)
+    override fun getViewBinding(): ActivityRegisterBinding =
+        ActivityRegisterBinding.inflate(layoutInflater)
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {

@@ -8,20 +8,18 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.TextView
 import androidx.core.view.GravityCompat
+import androidx.core.view.get
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kim.bifrost.coldrain.wanandroid.App
 import kim.bifrost.coldrain.wanandroid.R
-import kim.bifrost.coldrain.wanandroid.base.BaseActivity
+import kim.bifrost.coldrain.wanandroid.base.BaseFragment
 import kim.bifrost.coldrain.wanandroid.base.BaseVMActivity
 import kim.bifrost.coldrain.wanandroid.databinding.ActivityMainBinding
 import kim.bifrost.coldrain.wanandroid.repo.data.UserData
 import kim.bifrost.coldrain.wanandroid.utils.then
 import kim.bifrost.coldrain.wanandroid.utils.toast
-import kim.bifrost.coldrain.wanandroid.view.adapter.HomeVPAdapter
 import kim.bifrost.coldrain.wanandroid.view.adapter.MainViewPagerAdapter
 import kim.bifrost.coldrain.wanandroid.view.viewmodel.MainViewModel
 import kotlinx.coroutines.Dispatchers
@@ -57,6 +55,7 @@ class MainActivity : BaseVMActivity<MainViewModel, ActivityMainBinding>(isCancel
                 }
                 // 收藏
                 R.id.myCollections -> {
+//                    Log.d("Test", "(MainActivity.kt:31) ==> ${App.cookieData.getString("cookie", "null")}")
                     // 登录则进入界面
                     if (UserData.isLogged) {
                         startActivity(Intent(this, CollectActivity::class.java))
@@ -84,7 +83,7 @@ class MainActivity : BaseVMActivity<MainViewModel, ActivityMainBinding>(isCancel
         }
         // ViewPager2 相关逻辑
         binding.viewPager.adapter = MainViewPagerAdapter(this)
-        binding.viewPager.registerOnPageChangeCallback (object : ViewPager2.OnPageChangeCallback() {
+        binding.viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
                 binding.bottomNav.menu.getItem(position).isChecked = true
@@ -93,7 +92,7 @@ class MainActivity : BaseVMActivity<MainViewModel, ActivityMainBinding>(isCancel
         binding.viewPager.isUserInputEnabled = false
         // FAB 相关逻辑
         binding.floatingActionBtn.setOnClickListener {
-
+            scrollToTop()
         }
     }
 
@@ -127,18 +126,23 @@ class MainActivity : BaseVMActivity<MainViewModel, ActivityMainBinding>(isCancel
         App.coroutineScope.launch(Dispatchers.Main) {
             binding.navView.getHeaderView(0)
                 .also {
-                    it.findViewById<TextView>(R.id.userInfo).text = if (UserData.isLogged && UserData.userInfoData != null)
-                        "等级: ${UserData.userInfoData!!.coinInfo!!.level} 排名: ${UserData.userInfoData!!.coinInfo!!.rank}"
-                    else "等级: -- 排名: --"
-                    it.findViewById<TextView>(R.id.userName).text = if (UserData.isLogged && UserData.userInfoData != null)
-                        UserData.userInfoData!!.userInfo.nickname
-                    else "去登录"
+                    it.findViewById<TextView>(R.id.userInfo).text =
+                        if (UserData.isLogged && UserData.userInfoData != null)
+                            "等级: ${UserData.userInfoData!!.coinInfo!!.level} 排名: ${UserData.userInfoData!!.coinInfo!!.rank}"
+                        else "等级: -- 排名: --"
+                    it.findViewById<TextView>(R.id.userName).text =
+                        if (UserData.isLogged && UserData.userInfoData != null)
+                            UserData.userInfoData!!.userInfo.nickname
+                        else "去登录"
                 }
         }
     }
 
     // 将当前ViewPager2显示的fragment滑动至最顶端
+    @Suppress("UNCHECKED_CAST")
     private fun scrollToTop() {
-
+        binding.viewPager.apply {
+            (supportFragmentManager.findFragmentByTag("f$currentItem") as BaseFragment<*>).scrollToTop()
+        }
     }
 }

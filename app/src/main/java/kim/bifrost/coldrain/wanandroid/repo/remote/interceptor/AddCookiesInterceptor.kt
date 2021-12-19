@@ -14,11 +14,9 @@ import okhttp3.Response
  **/
 class AddCookiesInterceptor : Interceptor {
 
-    private val data = App.context.getSharedPreferences("cookie", Context.MODE_PRIVATE)
-
     override fun intercept(chain: Interceptor.Chain): Response {
         val builder = chain.request().newBuilder()
-        data.getString("cookie", "").apply {
+        App.cookieData.getString("cookie", "").apply {
             builder.addHeader("cookie", this!!)
         }
         return chain.proceed(builder.build())

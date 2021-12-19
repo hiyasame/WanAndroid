@@ -25,7 +25,8 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
         // View层不能持有model层的引用
         // 把数据交给ViewModel,然后在ViewModel中编写业务相关逻辑(ViewModel中可以持有Model层引用)
         // Model层持有服务端资源/本地资源
-        binding.viewModel = ViewModelProvider(this, LoginViewModel.Factory("", ""))[LoginViewModel::class.java]
+        binding.viewModel =
+            ViewModelProvider(this, LoginViewModel.Factory("", ""))[LoginViewModel::class.java]
         binding.buttonLogin.setOnClickListener {
             binding.viewModel?.postLogin()
         }
@@ -42,7 +43,8 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
         }
     }
 
-    override fun getViewBinding(): ActivityLoginBinding = ActivityLoginBinding.inflate(layoutInflater)
+    override fun getViewBinding(): ActivityLoginBinding =
+        ActivityLoginBinding.inflate(layoutInflater)
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {

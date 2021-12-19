@@ -13,9 +13,7 @@ import kim.bifrost.coldrain.wanandroid.repo.data.UserData
 class MainViewModel : ViewModel() {
 
     fun logout() {
-        if (UserData.isLogged) {
-            UserData.userInfoData = null
-            UserData.releaseLocalData()
-        }
+        UserData.userInfoData = null
+        UserData.releaseLocalData()
     }
 }

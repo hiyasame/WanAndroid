@@ -3,9 +3,6 @@ package kim.bifrost.coldrain.wanandroid.repo.data
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import kim.bifrost.coldrain.wanandroid.repo.remote.bean.ArticleData
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.withContext
 
 /**
  * kim.bifrost.coldrain.wanandroid.repo.data.PagingSource

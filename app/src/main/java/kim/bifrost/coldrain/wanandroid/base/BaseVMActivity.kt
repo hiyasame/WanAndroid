@@ -12,9 +12,10 @@ import java.lang.reflect.ParameterizedType
  * @author 寒雨
  * @since 2021/12/4 0:42
  **/
-abstract class BaseVMActivity<VM: ViewModel, DB: ViewDataBinding>(isCancelStatusBar: Boolean = true): BaseActivity<DB>(
-    isCancelStatusBar
-) {
+abstract class BaseVMActivity<VM : ViewModel, DB : ViewDataBinding>(isCancelStatusBar: Boolean = true) :
+    BaseActivity<DB>(
+        isCancelStatusBar
+    ) {
     protected val viewModel by lazy {
         ViewModelProvider(this)[getViewModelClass()]
     }

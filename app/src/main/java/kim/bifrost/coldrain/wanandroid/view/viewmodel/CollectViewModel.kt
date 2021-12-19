@@ -31,7 +31,7 @@ class CollectViewModel : ViewModel() {
     ).flow
 
     fun uncollect(id: Int, onComplete: () -> Unit) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             ApiService.uncollect(id).ifSuccess {
                 toastConcurrent("取消收藏成功")
                 withContext(Dispatchers.Main) {

@@ -1,23 +1,16 @@
 package kim.bifrost.coldrain.wanandroid.repo.remote
 
-import android.util.Log
 import com.google.gson.GsonBuilder
+import com.google.gson.TypeAdapter
+import com.google.gson.stream.JsonReader
+import com.google.gson.stream.JsonToken
+import com.google.gson.stream.JsonWriter
 import kim.bifrost.coldrain.wanandroid.constant.Constant
 import kim.bifrost.coldrain.wanandroid.repo.remote.interceptor.AddCookiesInterceptor
 import kim.bifrost.coldrain.wanandroid.repo.remote.interceptor.ReceivedCookieInterceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import com.google.gson.TypeAdapter
-import com.google.gson.stream.JsonReader
-import com.google.gson.stream.JsonToken
-import com.google.gson.stream.JsonWriter
-import kim.bifrost.coldrain.wanandroid.App
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import okhttp3.FormBody
-import okhttp3.Request
-import java.lang.NumberFormatException
 
 
 /**

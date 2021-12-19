@@ -34,7 +34,11 @@ fun toast(content: String, context: Context = App.context, duration: Int = Toast
 }
 
 // 并发安全的toast方法
-suspend fun toastConcurrent(content: String, context: Context = App.context, duration: Int = Toast.LENGTH_SHORT) {
+suspend fun toastConcurrent(
+    content: String,
+    context: Context = App.context,
+    duration: Int = Toast.LENGTH_SHORT,
+) {
     withContext(Dispatchers.Main) {
         Toast.makeText(context, content, duration).show()
     }

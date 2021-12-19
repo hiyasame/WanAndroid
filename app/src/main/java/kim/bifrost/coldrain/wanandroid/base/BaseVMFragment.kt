@@ -12,7 +12,7 @@ import java.lang.reflect.ParameterizedType
  * @author 寒雨
  * @since 2021/12/4 11:09
  **/
-abstract class BaseVMFragment<VM: ViewModel, DB: ViewDataBinding> : BaseFragment<DB>() {
+abstract class BaseVMFragment<VM : ViewModel, DB : ViewDataBinding> : BaseFragment<DB>() {
 
     protected val viewModel by lazy {
         ViewModelProvider(this)[getViewModelClass()]

@@ -26,7 +26,8 @@ fun <T> Any.getProperty(path: String): T? {
         return reflectClass.findField(path)?.get(this) as T?
     }
     // 递归获取
-    return reflectClass.findField(path.substring(0..deep))?.get(this)?.getProperty(path.substring(deep))
+    return reflectClass.findField(path.substring(0..deep))?.get(this)
+        ?.getProperty(path.substring(deep))
 }
 
 /**
@@ -44,7 +45,8 @@ fun Any.setProperty(path: String, any: Any?) {
         return
     }
     // 递归覆写
-    reflectClass.findField(path.substring(0..deep))?.get(this)?.setProperty(path.substring(deep), any)
+    reflectClass.findField(path.substring(0..deep))?.get(this)
+        ?.setProperty(path.substring(deep), any)
 }
 
 /**
@@ -58,7 +60,8 @@ fun Any.setProperty(path: String, any: Any?) {
 @Suppress("UNCHECKED_CAST")
 fun <T> Any.invokeMethod(path: String, vararg args: Any?): T? {
     val reflectClass = ReflectClass.find(this::class.java)
-    return (reflectClass.findMethod(path, *args) ?: error("Method not found")).invoke(this, *args) as T?
+    return (reflectClass.findMethod(path, *args) ?: error("Method not found")).invoke(this,
+        *args) as T?
 }
 
 /**
@@ -71,7 +74,8 @@ fun <T> Any.invokeMethod(path: String, vararg args: Any?): T? {
  */
 @Suppress("UNCHECKED_CAST")
 fun <T> Class<T>.construct(vararg args: Any?): T {
-    return (ReflectClass.find(this::class.java).findConstructor(*args)?.newInstance(args) ?: error("No constructor find")) as T
+    return (ReflectClass.find(this::class.java).findConstructor(*args)?.newInstance(args)
+        ?: error("No constructor find")) as T
 }
 
 /**
@@ -90,13 +94,16 @@ fun <T> Class<*>.invokeStatic(path: String, vararg args: Any?): T? {
 class ReflectClass(private val clazz: Class<*>) {
     // 超类缓存
     private var superclass: ReflectClass? = null
+
     // 接口缓存
     private var interfaces = ArrayList<ReflectClass>()
 
     // 字段缓存
     private val savingField = ArrayList<Field>()
+
     // 方法缓存
     private val savingMethod = ArrayList<Method>()
+
     // 构造器缓存
     private val savingConstructor = ArrayList<Constructor<*>>()
 
@@ -142,7 +149,10 @@ class ReflectClass(private val clazz: Class<*>) {
     // 获取方法
     fun findMethod(m: String, vararg parameter: Any?): Method? {
         // 优先从当前类中获取
-        savingMethod.firstOrNull { it.name == m && compare(it.parameterTypes, parameter.map { p -> p?.javaClass }.toTypedArray())}?.run {
+        savingMethod.firstOrNull {
+            it.name == m && compare(it.parameterTypes,
+                parameter.map { p -> p?.javaClass }.toTypedArray())
+        }?.run {
             return this
         }
         // 从超类中获取
@@ -179,7 +189,9 @@ class ReflectClass(private val clazz: Class<*>) {
             if (it.typeParameters.size == parameter.size) {
                 var checked = true
                 it.parameterTypes.forEachIndexed { index, p ->
-                    if (parameter[index] != null && !p.nonPrimitive().isInstance(parameter[index])) {
+                    if (parameter[index] != null && !p.nonPrimitive()
+                            .isInstance(parameter[index])
+                    ) {
                         checked = false
                     }
                 }
@@ -206,6 +218,7 @@ class ReflectClass(private val clazz: Class<*>) {
             else -> this
         }
     }
+
     companion object {
         private val savingClass = ConcurrentHashMap<String, ReflectClass>()
 

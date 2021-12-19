@@ -14,7 +14,7 @@ import androidx.fragment.app.Fragment
  * @author 寒雨
  * @since 2021/11/24 17:12
  **/
-abstract class BaseFragment<T: ViewDataBinding> : Fragment() {
+abstract class BaseFragment<T : ViewDataBinding> : Fragment() {
 
     protected lateinit var binding: T
         private set
@@ -22,13 +22,17 @@ abstract class BaseFragment<T: ViewDataBinding> : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         binding = getViewBinding(inflater, container, false)
         return binding.root
     }
 
-    abstract fun getViewBinding(inflater: LayoutInflater, container: ViewGroup?, boolean: Boolean): T
+    abstract fun getViewBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        boolean: Boolean,
+    ): T
 
     open fun scrollToTop() {}
 

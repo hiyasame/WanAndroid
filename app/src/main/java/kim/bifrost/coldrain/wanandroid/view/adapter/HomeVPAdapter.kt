@@ -3,7 +3,6 @@ package kim.bifrost.coldrain.wanandroid.view.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import androidx.viewpager.widget.PagerAdapter
 import com.bumptech.glide.Glide
 import kim.bifrost.coldrain.wanandroid.databinding.HomeVpItemBinding
 import kim.bifrost.coldrain.wanandroid.repo.remote.bean.BannerData
@@ -16,7 +15,7 @@ import kim.bifrost.coldrain.wanandroid.repo.remote.bean.BannerData
  * @since 2021/11/25 19:39
  **/
 class HomeVPAdapter(
-    val getItems: () -> List<BannerData>
+    val getItems: () -> List<BannerData>,
 ) : RecyclerView.Adapter<HomeVPAdapter.Holder>() {
 
     val items by lazy { getItems().toMutableList() }

@@ -17,8 +17,8 @@ import kotlinx.coroutines.launch
 class RegisterViewModel(
     var account: String?,
     var password: String?,
-    var repassword: String?
-    ) : ViewModel() {
+    var repassword: String?,
+) : ViewModel() {
 
     private val _registerLiveData = MutableLiveData<Boolean>()
 
@@ -27,7 +27,9 @@ class RegisterViewModel(
 
     // 这里的代码跟LoginModel的有些耦合
     fun postRegister() {
-        assertConditions(account.equals(null, ""), password.equals(null, ""), repassword.equals(null, "")) {
+        assertConditions(account.equals(null, ""),
+            password.equals(null, ""),
+            repassword.equals(null, "")) {
             toast("账号或密码不能为空")
             return
         }
@@ -53,7 +55,11 @@ class RegisterViewModel(
         }
     }
 
-    class Factory(private val account: String?, private val password: String?, private val repassword: String?): ViewModelProvider.Factory {
+    class Factory(
+        private val account: String?,
+        private val password: String?,
+        private val repassword: String?,
+    ) : ViewModelProvider.Factory {
 
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel> create(modelClass: Class<T>): T {

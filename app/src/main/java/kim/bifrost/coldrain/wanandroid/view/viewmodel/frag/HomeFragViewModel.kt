@@ -1,5 +1,7 @@
 package kim.bifrost.coldrain.wanandroid.view.viewmodel.frag
 
+import android.content.Context
+import android.graphics.Color
 import android.widget.ImageView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -7,11 +9,16 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
+import kim.bifrost.coldrain.wanandroid.R
 import kim.bifrost.coldrain.wanandroid.repo.data.HomePagingSource
+import kim.bifrost.coldrain.wanandroid.repo.data.UserData
 import kim.bifrost.coldrain.wanandroid.repo.remote.ApiService
-import kim.bifrost.coldrain.wanandroid.repo.remote.bean.ArticleData
 import kim.bifrost.coldrain.wanandroid.repo.remote.bean.BannerData
 import kim.bifrost.coldrain.wanandroid.utils.then
+import kim.bifrost.coldrain.wanandroid.utils.toast
+import kim.bifrost.coldrain.wanandroid.utils.toastConcurrent
+import kim.bifrost.coldrain.wanandroid.view.activity.LoginActivity
+import kim.bifrost.coldrain.wanandroid.view.adapter.HomePagingDataAdapter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -54,8 +61,47 @@ class HomeFragViewModel : ViewModel() {
         }
     }
 
-    fun collectOrNot() {
-
-    }
+    val onCollect: HomePagingDataAdapter.Holder.(HomePagingDataAdapter, Context) -> Unit =
+        { adapter, context ->
+            view.findViewById<ImageView>(R.id.homeButtonLike)
+                .setOnClickListener {
+                    if (UserData.isLogged) {
+                        val data = adapter.getItemOut(absoluteAdapterPosition)!!
+                        it.apply {
+                            if (data.collect) {
+                                viewModelScope.launch(Dispatchers.IO) {
+                                    ApiService.uncollect(data.id).ifSuccess {
+                                        withContext(Dispatchers.Main) {
+                                            toast("已取消收藏")
+                                            data.collect = false
+                                            (it as ImageView).setImageResource(R.drawable.ic_not_like)
+                                            it.clearColorFilter()
+                                            adapter.refresh()
+                                        }
+                                    }.ifFailure {
+                                        toastConcurrent("网络请求失败: $it")
+                                    }
+                                }
+                            } else {
+                                viewModelScope.launch(Dispatchers.IO) {
+                                    ApiService.collect(data.id).ifSuccess {
+                                        withContext(Dispatchers.Main) {
+                                            toastConcurrent("已收藏")
+                                            data.collect = true
+                                            (it as ImageView).setImageResource(R.drawable.ic_like)
+                                            it.setColorFilter(Color.parseColor("#CDF68A8A"))
+                                            adapter.refresh()
+                                        }
+                                    }.ifFailure {
+                                        toastConcurrent("网络请求失败: $it")
+                                    }
+                                }
+                            }
+                        }
+                    } else {
+                        LoginActivity.start(context)
+                    }
+                }
+        }
 
 }

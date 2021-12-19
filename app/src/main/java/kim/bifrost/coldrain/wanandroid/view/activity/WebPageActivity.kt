@@ -32,7 +32,8 @@ class WebPageActivity : BaseActivity<ActivityWebPageBinding>() {
         return true
     }
 
-    override fun getViewBinding(): ActivityWebPageBinding = ActivityWebPageBinding.inflate(layoutInflater)
+    override fun getViewBinding(): ActivityWebPageBinding =
+        ActivityWebPageBinding.inflate(layoutInflater)
 
     companion object {
         fun startActivity(context: Context, url: String, title: String) {

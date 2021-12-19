@@ -10,7 +10,7 @@ package kim.bifrost.coldrain.wanandroid.repo.remote.bean
 data class NetResponse<T>(
     val data: T?,
     val errorCode: Int,
-    val errorMsg: String
+    val errorMsg: String,
 ) {
     fun success(): Boolean = errorCode == 0
 

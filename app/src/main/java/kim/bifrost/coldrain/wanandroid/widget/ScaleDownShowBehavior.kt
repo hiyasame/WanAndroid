@@ -26,10 +26,15 @@ class ScaleDownShowBehavior(context: Context, attrs: AttributeSet) :
         directTargetChild: View,
         target: View,
         axes: Int,
-        type: Int
+        type: Int,
     ): Boolean {
         return axes == ViewCompat.SCROLL_AXIS_VERTICAL ||
-                super.onStartNestedScroll(coordinatorLayout, child, directTargetChild, target, axes, type)
+                super.onStartNestedScroll(coordinatorLayout,
+                    child,
+                    directTargetChild,
+                    target,
+                    axes,
+                    type)
     }
 
     @SuppressLint("RestrictedApi")
@@ -42,9 +47,16 @@ class ScaleDownShowBehavior(context: Context, attrs: AttributeSet) :
         dyConsumed: Int,
         dxUnconsumed: Int,
         dyUnconsumed: Int,
-        type: Int
+        type: Int,
     ) {
-        super.onNestedScroll(coordinatorLayout, child, target, dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed, type)
+        super.onNestedScroll(coordinatorLayout,
+            child,
+            target,
+            dxConsumed,
+            dyConsumed,
+            dxUnconsumed,
+            dyUnconsumed,
+            type)
         if (dyConsumed > 0 && child.visibility == View.VISIBLE) {
             child.visibility = View.INVISIBLE
         } else if (dyConsumed < 0 && child.visibility != View.VISIBLE) {

@@ -1,9 +1,7 @@
 package kim.bifrost.coldrain.wanandroid.view.adapter
 
-import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import kim.bifrost.coldrain.wanandroid.view.fragment.*
 

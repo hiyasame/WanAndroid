@@ -5,6 +5,7 @@ import kim.bifrost.coldrain.wanandroid.App
 import kim.bifrost.coldrain.wanandroid.repo.remote.ApiService
 import kim.bifrost.coldrain.wanandroid.repo.remote.bean.ArticleData
 import kim.bifrost.coldrain.wanandroid.repo.remote.bean.CollectionData
+import kim.bifrost.coldrain.wanandroid.repo.remote.bean.SquareData
 
 /**
  * kim.bifrost.coldrain.wanandroid.repo.data.PagingRepository
@@ -22,10 +23,12 @@ object PagingRepository {
      * @return data
      */
     suspend fun getArticlePages(page: Int, size: Int = 20): List<ArticleData> {
-        if (page == 0) return ApiService.topArticles().data?.map { it.apply {
-            author = "置顶    >>>    $author"
-            shareUser = "置顶     >>>     $shareUser"
-        } } ?: error("failed to attach cloud data")
+        if (page == 0) return ApiService.topArticles().data?.map {
+            it.apply {
+                author = "置顶    >>>    $author"
+                shareUser = "置顶     >>>     $shareUser"
+            }
+        } ?: error("failed to attach cloud data")
         return ApiService.articles(page, size).data?.datas ?: error("failed to attach cloud data")
     }
 
@@ -36,8 +39,33 @@ object PagingRepository {
      * @param size 每页文章的量
      * @return data
      */
-    suspend fun getCollectionPages(page: Int, size: Int = 20): List<CollectionData.SingleCollectionData> {
-        Log.d("Test", "(PagingRepository.kt:40) ==> ${App.gson.toJson(ApiService.collections(page, size))}")
-        return ApiService.collections(page, size).data?.datas ?: error("failed to attach cloud data")
+    suspend fun getCollectionPages(
+        page: Int,
+        size: Int = 20,
+    ): List<CollectionData.SingleCollectionData> {
+        return ApiService.collections(page, size).data?.datas
+            ?: error("failed to attach cloud data")
+    }
+
+    /**
+     * 获取广场Data
+     *
+     * @param page 当前页数
+     * @param size 每页文章的量
+     * @return data
+     */
+    suspend fun getSquareData(
+        page: Int,
+        size: Int = 20,
+    ): List<SquareData.InnerData> {
+        return ApiService.squareData(page, size).data?.datas ?: error("failed to attach cloud data")
+    }
+
+    suspend fun getWechatHistoryArticles(
+        cid: Int,
+        page: Int,
+        size: Int = 20,
+    ): List<ArticleData> {
+        return ApiService.wxHistoryArticles(cid, page, size).data?.datas ?: error("failed to attach cloud data")
     }
 }

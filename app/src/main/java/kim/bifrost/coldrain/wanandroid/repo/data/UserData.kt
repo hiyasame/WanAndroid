@@ -1,9 +1,7 @@
 package kim.bifrost.coldrain.wanandroid.repo.data
 
 import android.content.Context
-import android.content.SharedPreferences
 import androidx.core.content.edit
-import com.google.gson.reflect.TypeToken
 import kim.bifrost.coldrain.wanandroid.App
 import kim.bifrost.coldrain.wanandroid.repo.remote.bean.UserInfoData
 
@@ -30,8 +28,10 @@ object UserData {
     private val localData = App.context.getSharedPreferences("userdata", Context.MODE_PRIVATE)
 
     init {
-        isLogged = App.context.getSharedPreferences("cookie", Context.MODE_PRIVATE).getString("cookie", null) != null
-        userInfoData = App.gson.fromJson(localData.getString("userInfoData", ""), UserInfoData::class.java)
+        isLogged = App.cookieData
+            .getString("cookie", null) != null
+        userInfoData =
+            App.gson.fromJson(localData.getString("userInfoData", ""), UserInfoData::class.java)
     }
 
     // 释放
@@ -39,7 +39,7 @@ object UserData {
         localData.edit {
             clear()
         }
-        App.context.getSharedPreferences("cookie", Context.MODE_PRIVATE).edit {
+        App.cookieData.edit {
             clear()
         }
     }

@@ -11,9 +11,11 @@ import kim.bifrost.coldrain.wanandroid.utils.getProperty
  * @author 寒雨
  * @since 2021/12/4 11:24
  **/
-open class BaseItemCallBack<T>(val func: (T, T) -> Boolean = { a, b ->
-    defFunc(a as Any, b as Any)
-}) : DiffUtil.ItemCallback<T>() {
+open class BaseItemCallBack<T>(
+    val func: (T, T) -> Boolean = { a, b ->
+        defFunc(a as Any, b as Any)
+    },
+) : DiffUtil.ItemCallback<T>() {
     override fun areItemsTheSame(oldItem: T, newItem: T): Boolean {
         return func(oldItem, newItem)
     }

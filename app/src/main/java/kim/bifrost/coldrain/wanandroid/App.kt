@@ -3,6 +3,7 @@ package kim.bifrost.coldrain.wanandroid
 import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context
+import android.content.SharedPreferences
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import kotlinx.coroutines.CoroutineScope
@@ -25,6 +26,8 @@ class App : Application() {
     companion object {
         @SuppressLint("StaticFieldLeak")
         lateinit var context: Context
+
+        val cookieData: SharedPreferences by lazy { context.getSharedPreferences("cookie", Context.MODE_PRIVATE) }
 
         val coroutineScope = CoroutineScope(Dispatchers.Main)
 
