@@ -29,8 +29,6 @@ class App : Application() {
 
         val cookieData: SharedPreferences by lazy { context.getSharedPreferences("cookie", Context.MODE_PRIVATE) }
 
-        val coroutineScope = CoroutineScope(Dispatchers.Main)
-
         val gson: Gson = GsonBuilder()
             .setPrettyPrinting()
             .disableHtmlEscaping()

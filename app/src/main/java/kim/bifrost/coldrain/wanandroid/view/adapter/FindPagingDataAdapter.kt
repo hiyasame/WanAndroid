@@ -8,7 +8,8 @@ import android.view.ViewGroup
 import kim.bifrost.coldrain.wanandroid.R
 import kim.bifrost.coldrain.wanandroid.base.BasePagingAdapter
 import kim.bifrost.coldrain.wanandroid.databinding.HomeRvItemBinding
-import kim.bifrost.coldrain.wanandroid.repo.remote.bean.SquareData
+import kim.bifrost.coldrain.wanandroid.repo.remote.bean.ArticleData
+import kim.bifrost.coldrain.wanandroid.repo.remote.bean.PagerArticlesData
 import kim.bifrost.coldrain.wanandroid.view.activity.WebPageActivity
 
 /**
@@ -18,7 +19,7 @@ import kim.bifrost.coldrain.wanandroid.view.activity.WebPageActivity
  * @author 寒雨
  * @since 2021/12/18 18:33
  **/
-class FindPagingDataAdapter(context: Context, private val callback: Holder<HomeRvItemBinding>.(FindPagingDataAdapter) -> Unit) : BasePagingAdapter<HomeRvItemBinding, SquareData.InnerData>(context) {
+class FindPagingDataAdapter(context: Context, private val callback: Holder<HomeRvItemBinding>.(FindPagingDataAdapter) -> Unit) : BasePagingAdapter<HomeRvItemBinding, ArticleData>(context) {
     override fun getDataBinding(parent: ViewGroup, viewType: Int): HomeRvItemBinding =
         HomeRvItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 

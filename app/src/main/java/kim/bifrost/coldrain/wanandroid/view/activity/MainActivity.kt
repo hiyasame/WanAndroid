@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.core.view.GravityCompat
 import androidx.core.view.get
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kim.bifrost.coldrain.wanandroid.App
@@ -123,7 +124,7 @@ class MainActivity : BaseVMActivity<MainViewModel, ActivityMainBinding>(isCancel
 
     // 刷新UI登录状态
     private fun reloadLoginStatus() {
-        App.coroutineScope.launch(Dispatchers.Main) {
+        lifecycleScope.launch(Dispatchers.Main) {
             binding.navView.getHeaderView(0)
                 .also {
                     it.findViewById<TextView>(R.id.userInfo).text =

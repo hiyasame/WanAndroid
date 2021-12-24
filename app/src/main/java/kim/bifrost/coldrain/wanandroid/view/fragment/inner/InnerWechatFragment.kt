@@ -1,7 +1,6 @@
-package kim.bifrost.coldrain.wanandroid.view.fragment
+package kim.bifrost.coldrain.wanandroid.view.fragment.inner
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,11 +11,10 @@ import kim.bifrost.coldrain.wanandroid.databinding.FragmentInnerWechatBinding
 import kim.bifrost.coldrain.wanandroid.view.adapter.InnerWechatPagingDataAdapter
 import kim.bifrost.coldrain.wanandroid.view.viewmodel.frag.InnerWechatFragViewModel
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.launch
 
 /**
- * kim.bifrost.coldrain.wanandroid.view.fragment.InnerWechatFragment
+ * kim.bifrost.coldrain.wanandroid.view.fragment.inner.InnerWechatFragment
  * WanAndroid
  *
  * @author 寒雨

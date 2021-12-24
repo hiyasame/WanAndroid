@@ -141,7 +141,7 @@ interface ApiService {
      * @return
      */
     @GET("user_article/list/{page}/json")
-    fun getSquareData(@Path("page") page: Int, @Query("page_size") pageSize: Int): Call<NetResponse<SquareData>>
+    fun getSquareData(@Path("page") page: Int, @Query("page_size") pageSize: Int): Call<NetResponse<PagerArticlesData>>
 
     /**
      * 微信公众号文章类别
@@ -151,8 +151,35 @@ interface ApiService {
     @GET("wxarticle/chapters/json")
     fun getWxArticle(): Call<NetResponse<List<WxArticleType>>>
 
+    /**
+     * 微信公众号历史文章
+     *
+     * @param cid
+     * @param page
+     * @param pageSize
+     * @return
+     */
     @GET("wxarticle/list/{cid}/{page}/json")
     fun getWxHistoryArticles(@Path("cid") cid: Int, @Path("page") page: Int, @Query("page_size") pageSize: Int): Call<NetResponse<ArticlesData>>
+
+    /**
+     * 获取体系数据
+     *
+     * @return
+     */
+    @GET("tree/json")
+    fun getSystemData(): Call<NetResponse<List<SystemData>>>
+
+    /**
+     * 获取导航数据
+     *
+     * @return
+     */
+    @GET("navi/json")
+    fun getNavigationData(): Call<NetResponse<List<NavigationData>>>
+
+    @GET("article/list/{page}/json")
+    fun getSystemDataArticles(@Path("page") page: Int, @Query("cid") cid: Int, @Query("page_size") pageSize: Int): Call<NetResponse<PagerArticlesData>>
 
     companion object {
         suspend fun login(username: String, password: String) =
@@ -172,5 +199,8 @@ interface ApiService {
             RetrofitHelper.service.getSquareData(page, pageSize).await()
         suspend fun wxArticles() = RetrofitHelper.service.getWxArticle().await()
         suspend fun wxHistoryArticles(cid: Int, page: Int, pageSize: Int) = RetrofitHelper.service.getWxHistoryArticles(cid, page, pageSize).await()
+        suspend fun systemData() = RetrofitHelper.service.getSystemData().await()
+        suspend fun getNavigationData() = RetrofitHelper.service.getNavigationData().await()
+        suspend fun getSystemDataArticles(page: Int, cid: Int, pageSize: Int) = RetrofitHelper.service.getSystemDataArticles(page, cid, pageSize).await()
     }
 }

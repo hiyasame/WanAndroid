@@ -14,9 +14,9 @@ data class NetResponse<T>(
 ) {
     fun success(): Boolean = errorCode == 0
 
-    inline fun ifSuccess(func: () -> Unit): NetResponse<T> {
+    inline fun ifSuccess(func: (T) -> Unit): NetResponse<T> {
         if (success()) {
-            func()
+            func(data!!)
         }
         return this
     }

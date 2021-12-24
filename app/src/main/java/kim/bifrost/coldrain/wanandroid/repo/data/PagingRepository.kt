@@ -1,11 +1,9 @@
 package kim.bifrost.coldrain.wanandroid.repo.data
 
-import android.util.Log
-import kim.bifrost.coldrain.wanandroid.App
 import kim.bifrost.coldrain.wanandroid.repo.remote.ApiService
 import kim.bifrost.coldrain.wanandroid.repo.remote.bean.ArticleData
 import kim.bifrost.coldrain.wanandroid.repo.remote.bean.CollectionData
-import kim.bifrost.coldrain.wanandroid.repo.remote.bean.SquareData
+import kim.bifrost.coldrain.wanandroid.repo.remote.bean.PagerArticlesData
 
 /**
  * kim.bifrost.coldrain.wanandroid.repo.data.PagingRepository
@@ -57,7 +55,7 @@ object PagingRepository {
     suspend fun getSquareData(
         page: Int,
         size: Int = 20,
-    ): List<SquareData.InnerData> {
+    ): List<ArticleData> {
         return ApiService.squareData(page, size).data?.datas ?: error("failed to attach cloud data")
     }
 
@@ -67,5 +65,11 @@ object PagingRepository {
         size: Int = 20,
     ): List<ArticleData> {
         return ApiService.wxHistoryArticles(cid, page, size).data?.datas ?: error("failed to attach cloud data")
+    }
+
+    suspend fun getSystemArticles(
+        page: Int, cid: Int, pageSize: Int = 20
+    ): List<ArticleData> {
+        return ApiService.getSystemDataArticles(page, cid, pageSize).data?.datas ?: error("failed to attach cloud data")
     }
 }

@@ -38,8 +38,9 @@ android {
 }
 
 dependencies {
+    implementation("q.rorbin:VerticalTabLayout:1.2.5")
     // Paging
-    implementation("androidx.paging:paging-runtime:3.0.1")
+    implementation("androidx.paging:paging-runtime:3.1.0")
     // LifeCycle kt
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0"
     // 滑动刷新布局
@@ -54,7 +55,7 @@ dependencies {
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
     // 协程库
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2-native-mt'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2'
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.4.0'
     implementation 'com.google.android.material:material:1.4.0'
