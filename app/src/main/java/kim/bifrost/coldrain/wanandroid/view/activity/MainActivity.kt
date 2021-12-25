@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.TextView
 import androidx.core.view.GravityCompat
 import androidx.core.view.get
@@ -72,6 +73,7 @@ class MainActivity : BaseVMActivity<MainViewModel, ActivityMainBinding>(isCancel
         binding.bottomNav.apply {
             labelVisibilityMode = BottomNavigationView.LABEL_VISIBILITY_LABELED
             setOnItemSelectedListener {
+                if (binding.viewPager.scrollState != ViewPager2.SCROLL_STATE_IDLE) return@setOnItemSelectedListener false
                 when (it.itemId) {
                     R.id.bottom_nav_home -> binding.viewPager.currentItem = 0
                     R.id.bottom_nav_marketplace -> binding.viewPager.currentItem = 1

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import kim.bifrost.coldrain.wanandroid.R
 import kim.bifrost.coldrain.wanandroid.base.BasePagingAdapter
@@ -19,7 +20,7 @@ import kim.bifrost.coldrain.wanandroid.view.activity.WebPageActivity
  * @author 寒雨
  * @since 2021/12/18 18:33
  **/
-class FindPagingDataAdapter(context: Context, private val callback: Holder<HomeRvItemBinding>.(FindPagingDataAdapter) -> Unit) : BasePagingAdapter<HomeRvItemBinding, ArticleData>(context) {
+class FindPagingDataAdapter(context: Context, private val callback: Holder<HomeRvItemBinding>.(FindPagingDataAdapter, View) -> Unit) : BasePagingAdapter<HomeRvItemBinding, ArticleData>(context) {
     override fun getDataBinding(parent: ViewGroup, viewType: Int): HomeRvItemBinding =
         HomeRvItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 
@@ -47,7 +48,7 @@ class FindPagingDataAdapter(context: Context, private val callback: Holder<HomeR
 
     override val holderInit: Holder<HomeRvItemBinding>.() -> Unit
         get() = {
-            callback(this, this@FindPagingDataAdapter)
+            callback(this, this@FindPagingDataAdapter, binding.homeButtonLike)
             binding.root.setOnClickListener {
                 // 点击进入网页
                 val data = getItem(bindingAdapterPosition)

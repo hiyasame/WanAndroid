@@ -29,8 +29,7 @@ import kotlinx.coroutines.withContext
  * @since 2021/12/18 19:54
  **/
 class FindFragViewModel : ViewModel() {
-    val collectCallback: BasePagingAdapter.Holder<HomeRvItemBinding>.(FindPagingDataAdapter) -> Unit
-        = getCollectFunc(viewModelScope)
+    val collectCallback = getCollectFunc<FindPagingDataAdapter>(viewModelScope)
 
     val squareDataList = Pager(
         config = PagingConfig(

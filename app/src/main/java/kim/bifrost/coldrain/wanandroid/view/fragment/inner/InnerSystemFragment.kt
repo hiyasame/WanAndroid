@@ -14,6 +14,7 @@ import kim.bifrost.coldrain.wanandroid.view.viewmodel.frag.InnerSystemFragViewMo
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import androidx.recyclerview.widget.DividerItemDecoration
+import kotlinx.coroutines.delay
 
 
 /**
@@ -37,13 +38,19 @@ class InnerSystemFragment : BaseVMFragment<InnerSystemFragViewModel, FragmentInn
                 it.ifSuccess {
                     binding.rvInnerSystem.apply {
                         layoutManager = LinearLayoutManager(requireContext())
-                        adapter = SystemDataAdapter(requireContext(), it)
+                        adapter = SystemDataAdapter(requireContext(), it!!)
                         addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
                     }
                     binding.srlInnerSystem.isRefreshing = false
                 }.ifFailure { s ->
                     toastConcurrent(s)
                 }
+            }
+        }
+        binding.srlInnerSystem.setOnRefreshListener {
+            lifecycleScope.launch {
+                delay(500L)
+                binding.srlInnerSystem.isRefreshing = false
             }
         }
     }

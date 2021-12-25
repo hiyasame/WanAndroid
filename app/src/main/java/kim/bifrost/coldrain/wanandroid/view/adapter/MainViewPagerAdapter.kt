@@ -17,11 +17,11 @@ class MainViewPagerAdapter(val activity: AppCompatActivity) : FragmentStateAdapt
 
     override fun createFragment(position: Int): Fragment {
         return when (position) {
-            0 -> activity.supportFragmentManager.findFragmentByTag("f0") ?: HomeFragment()
-            1 -> activity.supportFragmentManager.findFragmentByTag("f1") ?: FindFragment()
-            2 -> activity.supportFragmentManager.findFragmentByTag("f2") ?: WechatFragment()
-            3 -> activity.supportFragmentManager.findFragmentByTag("f3") ?: SystemFragment()
-            4 -> activity.supportFragmentManager.findFragmentByTag("f4") ?: ProjectFragment()
+            0 -> HomeFragment()
+            1 -> FindFragment()
+            2 -> WechatFragment()
+            3 -> SystemFragment()
+            4 -> ProjectFragment()
             else -> error("wrong state")
         }
     }

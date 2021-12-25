@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -50,12 +51,12 @@ class RVItemPagerAdapter(private val context: Context, private val coroutineScop
     override fun getItemCount(): Int = data.size
 
     interface CallBack {
-        val onCollect: BasePagingAdapter.Holder<HomeRvItemBinding>.(InnerRvPagingAdapter) -> Unit
+        val onCollect: BasePagingAdapter.Holder<HomeRvItemBinding>.(InnerRvPagingAdapter, View) -> Unit
         suspend fun collectData(cid: Int): Flow<PagingData<ArticleData>>
     }
 }
 
-class InnerRvPagingAdapter(context: Context, private val callback: Holder<HomeRvItemBinding>.(InnerRvPagingAdapter) -> Unit) : BasePagingAdapter<HomeRvItemBinding, ArticleData>(context) {
+class InnerRvPagingAdapter(context: Context, private val callback: Holder<HomeRvItemBinding>.(InnerRvPagingAdapter, View) -> Unit) : BasePagingAdapter<HomeRvItemBinding, ArticleData>(context) {
     override fun getDataBinding(parent: ViewGroup, viewType: Int): HomeRvItemBinding =
         HomeRvItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 
@@ -83,7 +84,7 @@ class InnerRvPagingAdapter(context: Context, private val callback: Holder<HomeRv
 
     override val holderInit: Holder<HomeRvItemBinding>.() -> Unit
         get() = {
-            callback(this, this@InnerRvPagingAdapter)
+            callback(this, this@InnerRvPagingAdapter, binding.homeButtonLike)
             binding.root.setOnClickListener {
                 // 点击进入网页
                 val data = getItem(bindingAdapterPosition)

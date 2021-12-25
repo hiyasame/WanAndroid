@@ -41,9 +41,9 @@ class InnerNavigationFragment :
                     it.ifSuccess { list ->
                         rvNavigation.apply {
                             layoutManager = LinearLayoutManager(requireContext())
-                            adapter = NavigationRvAdapter(context, list)
+                            adapter = NavigationRvAdapter(context, list!!)
                         }
-                        list.forEach { d ->
+                        list!!.forEach { d ->
                             vtlNavigation.addTab(QTabView(context).apply {
                                 title = ITabView.TabTitle.Builder()
                                     .setTextSize(18)

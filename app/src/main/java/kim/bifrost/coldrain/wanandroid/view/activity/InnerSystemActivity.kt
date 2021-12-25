@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.PagingData
 import com.google.android.material.tabs.TabLayoutMediator
@@ -21,7 +22,7 @@ import kim.bifrost.coldrain.wanandroid.view.adapter.StandardPagerAdapter
 import kim.bifrost.coldrain.wanandroid.view.viewmodel.InnerSystemViewModel
 import kotlinx.coroutines.flow.Flow
 
-class InnerSystemActivity : BaseVMActivity<InnerSystemViewModel, ActivityInnerSystemBinding>() {
+class InnerSystemActivity : BaseVMActivity<InnerSystemViewModel, ActivityInnerSystemBinding>(false) {
 
     private val data by lazy { App.gson.fromJson(intent.getStringExtra("data"), SystemData::class.java) }
 
@@ -34,7 +35,7 @@ class InnerSystemActivity : BaseVMActivity<InnerSystemViewModel, ActivityInnerSy
             it.title = data.name
         }
         binding.vpInnerSystem.adapter = RVItemPagerAdapter(this, lifecycleScope, data.children, object : RVItemPagerAdapter.CallBack {
-            override val onCollect: BasePagingAdapter.Holder<HomeRvItemBinding>.(InnerRvPagingAdapter) -> Unit
+            override val onCollect: BasePagingAdapter.Holder<HomeRvItemBinding>.(InnerRvPagingAdapter, View) -> Unit
                 get() = viewModel.adapterCallback
 
             override suspend fun collectData(cid: Int): Flow<PagingData<ArticleData>> = viewModel.getSystemDataArticles(cid)

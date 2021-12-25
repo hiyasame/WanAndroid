@@ -74,8 +74,8 @@ class HomeFragViewModel : ViewModel() {
                                         withContext(Dispatchers.Main) {
                                             toast("已取消收藏")
                                             data.collect = false
-                                            (it as ImageView).setImageResource(R.drawable.ic_not_like)
-                                            it.clearColorFilter()
+                                            (this@apply as ImageView).setImageResource(R.drawable.ic_not_like)
+                                            clearColorFilter()
                                             adapter.refresh()
                                         }
                                     }.ifFailure {
@@ -88,8 +88,8 @@ class HomeFragViewModel : ViewModel() {
                                         withContext(Dispatchers.Main) {
                                             toastConcurrent("已收藏")
                                             data.collect = true
-                                            (it as ImageView).setImageResource(R.drawable.ic_like)
-                                            it.setColorFilter(Color.parseColor("#CDF68A8A"))
+                                            (this@apply as ImageView).setImageResource(R.drawable.ic_like)
+                                            setColorFilter(Color.parseColor("#CDF68A8A"))
                                             adapter.refresh()
                                         }
                                     }.ifFailure {

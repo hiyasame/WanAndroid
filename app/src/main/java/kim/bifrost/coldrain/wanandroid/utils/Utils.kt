@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.annotation.RequiresApi
+import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.viewModelScope
 import kim.bifrost.coldrain.wanandroid.R
 import kim.bifrost.coldrain.wanandroid.base.BasePagingAdapter
@@ -33,32 +34,30 @@ fun randomColor() = Color.valueOf(Random.nextFloat(), Random.nextFloat(), Random
 fun View.getMarginLayoutParams() = if (layoutParams is ViewGroup.MarginLayoutParams) layoutParams as ViewGroup.MarginLayoutParams else ViewGroup.MarginLayoutParams(
     layoutParams).apply { layoutParams = this }
 
-fun <T: BasePagingAdapter<HomeRvItemBinding, ArticleData>> getCollectFunc(viewModelScope: CoroutineScope) : BasePagingAdapter.Holder<HomeRvItemBinding>.(T) -> Unit
-    = { adapter ->
-        binding.homeButtonLike.setOnClickListener {
+fun <T: BasePagingAdapter<*, ArticleData>> getCollectFunc(viewModelScope: CoroutineScope) : BasePagingAdapter.Holder<*>.(T, View) -> Unit
+    = { adapter, view ->
+        view.setOnClickListener {
             if (UserData.isLogged) {
                 val data = adapter.getItemOut(bindingAdapterPosition)!!
                 viewModelScope.launch(Dispatchers.IO) {
                     if (data.collect) {
-                        ApiService.uncollect(data.id).ifSuccess {
+                        ApiService.uncollect(data.id).ifSuccess { _ ->
                             withContext(Dispatchers.Main) {
                                 toast("已取消收藏")
                                 data.collect = false
                                 (it as ImageView).setImageResource(R.drawable.ic_not_like)
                                 it.clearColorFilter()
-                                adapter.refresh()
                             }
                         }.ifFailure {
                             toastConcurrent("网络请求失败: $it")
                         }
                     } else {
-                        ApiService.collect(data.id).ifSuccess {
+                        ApiService.collect(data.id).ifSuccess { _ ->
                             withContext(Dispatchers.Main) {
                                 toastConcurrent("已收藏")
                                 data.collect = true
                                 (it as ImageView).setImageResource(R.drawable.ic_like)
                                 it.setColorFilter(Color.parseColor("#CDF68A8A"))
-                                adapter.refresh()
                             }
                         }.ifFailure {
                             toastConcurrent("网络请求失败: $it")

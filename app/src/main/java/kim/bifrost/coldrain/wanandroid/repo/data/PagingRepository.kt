@@ -72,4 +72,10 @@ object PagingRepository {
     ): List<ArticleData> {
         return ApiService.getSystemDataArticles(page, cid, pageSize).data?.datas ?: error("failed to attach cloud data")
     }
+
+    suspend fun getProjectArticles(
+        page: Int, cid: Int, pageSize: Int = 20
+    ): List<ArticleData> {
+        return ApiService.getProjectData(page, cid, pageSize).data?.datas ?: error("failed to attach cloud data")
+    }
 }

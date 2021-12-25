@@ -178,8 +178,27 @@ interface ApiService {
     @GET("navi/json")
     fun getNavigationData(): Call<NetResponse<List<NavigationData>>>
 
+    /**
+     * 获取体系文章
+     *
+     * @param page 页码
+     * @param cid id
+     * @param pageSize 每页大小
+     * @return
+     */
     @GET("article/list/{page}/json")
     fun getSystemDataArticles(@Path("page") page: Int, @Query("cid") cid: Int, @Query("page_size") pageSize: Int): Call<NetResponse<PagerArticlesData>>
+
+    /**
+     * 获取项目类型
+     *
+     * @return
+     */
+    @GET("project/tree/json")
+    fun getProjectTypes(): Call<NetResponse<List<ProjectTypeData>>>
+
+    @GET("/project/list/{page}/json")
+    fun getProjectData(@Path("page") page: Int, @Query("cid") cid: Int, @Query("page_size") pageSize: Int): Call<NetResponse<PagerArticlesData>>
 
     companion object {
         suspend fun login(username: String, password: String) =
@@ -202,5 +221,7 @@ interface ApiService {
         suspend fun systemData() = RetrofitHelper.service.getSystemData().await()
         suspend fun getNavigationData() = RetrofitHelper.service.getNavigationData().await()
         suspend fun getSystemDataArticles(page: Int, cid: Int, pageSize: Int) = RetrofitHelper.service.getSystemDataArticles(page, cid, pageSize).await()
+        suspend fun getProjectType() = RetrofitHelper.service.getProjectTypes().await()
+        suspend fun getProjectData(page: Int, cid: Int, pageSize: Int) = RetrofitHelper.service.getProjectData(page, cid, pageSize).await()
     }
 }
