@@ -2,19 +2,20 @@ package kim.bifrost.coldrain.wanandroid.view.activity
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.edit
 import androidx.core.view.GravityCompat
-import androidx.core.view.get
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.ViewPager2
+import com.bumptech.glide.Glide
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import kim.bifrost.coldrain.wanandroid.App
 import kim.bifrost.coldrain.wanandroid.R
 import kim.bifrost.coldrain.wanandroid.base.BaseFragment
 import kim.bifrost.coldrain.wanandroid.base.BaseVMActivity
@@ -28,6 +29,24 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class MainActivity : BaseVMActivity<MainViewModel, ActivityMainBinding>(isCancelStatusBar = false) {
+
+    private val sp by lazy { getPreferences(MODE_PRIVATE) }
+
+    private val requestDataLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == RESULT_OK) {
+            val data = result.data?.data ?: return@registerForActivityResult
+            sp.edit {
+                putString("icon", data.toString())
+            }
+            val img = binding.navView.getHeaderView(0)
+                .findViewById<ImageView>(R.id.userIcon)
+            // 加载图片
+            Glide.with(img)
+                .load(data)
+                .into(img)
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setSupportActionBar(binding.mainToolbar.toolbar)
@@ -39,12 +58,38 @@ class MainActivity : BaseVMActivity<MainViewModel, ActivityMainBinding>(isCancel
         // 侧滑栏
         // 设置HeaderLayout中元素点击事件
         binding.navView.getHeaderView(0)
-            .findViewById<TextView>(R.id.userName)
-            .setOnClickListener {
-                (it as TextView).text.equals("去登录").then {
-                    // 启动登录Activity
-                    LoginActivity.start(this)
-                }
+            .apply {
+                findViewById<TextView>(R.id.userName)
+                    .setOnClickListener {
+                        (it as TextView).text.equals("去登录").then {
+                            // 启动登录Activity
+                            LoginActivity.start(this@MainActivity)
+                        }
+                    }
+                findViewById<ImageView>(R.id.userIcon)
+                    .apply {
+                        setOnClickListener {
+                            val b = UserData.isLogged
+                            if (UserData.isLogged) {
+                                // 打开文件选择器
+                                val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
+                                intent.addCategory(Intent.CATEGORY_OPENABLE)
+                                // 指定只显示图片
+                                intent.type = "image/*"
+                                requestDataLauncher.launch(intent)
+                            } else {
+                                LoginActivity.start(this@MainActivity)
+                            }
+                        }
+                        if (sp.getString("icon", null) != null) {
+                            val uri = sp.getString("icon", null)!!
+                            Glide.with(this)
+                                .load(Uri.parse(uri))
+                                .into(this)
+                        } else {
+                            resetUserIcon()
+                        }
+                    }
             }
         binding.navView.setNavigationItemSelectedListener {
             when (it.itemId) {
@@ -53,6 +98,7 @@ class MainActivity : BaseVMActivity<MainViewModel, ActivityMainBinding>(isCancel
                     Log.d("Test", "Test")
                     viewModel.logout()
                     reloadLoginStatus()
+                    resetUserIcon()
                     toast("注销成功")
                 }
                 // 收藏
@@ -139,6 +185,17 @@ class MainActivity : BaseVMActivity<MainViewModel, ActivityMainBinding>(isCancel
                         else "去登录"
                 }
         }
+    }
+
+    private fun resetUserIcon() {
+        sp.edit {
+            clear()
+        }
+        val img = binding.navView.getHeaderView(0)
+            .findViewById<ImageView>(R.id.userIcon)
+        Glide.with(img)
+            .load("https://i0.hdslb.com/bfs/face/member/noface.jpg@240w_240h_1c_1s.webp")
+            .into(img)
     }
 
     // 将当前ViewPager2显示的fragment滑动至最顶端

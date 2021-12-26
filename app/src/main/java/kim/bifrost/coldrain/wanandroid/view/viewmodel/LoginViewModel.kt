@@ -37,7 +37,6 @@ class LoginViewModel(var account: String?, var password: String?) : ViewModel() 
                 data.success().then {
                     // 登录成功逻辑
                     toastConcurrent("登录成功!")
-                    UserData.isLogged = true
                     UserData.userInfoData = ApiService.info().data
                     _loginLiveData.postValue(true)
                 }

@@ -40,7 +40,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
-                android:textColor="@color/black"
+                android:textColor="@color/secondary_textColor"
                 android:textSize="15sp"
                 android:ellipsize="end"
                 android:maxLines="1"
@@ -82,7 +82,8 @@
                     android:src="@drawable/ic_not_like"
                     android:layout_gravity="end|bottom"
                     android:layout_width="20dp"
-                    android:layout_height="20dp" />
+                    android:layout_height="20dp"
+                    tools:ignore="ContentDescription" />
             </FrameLayout>
 
 

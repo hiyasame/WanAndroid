@@ -26,7 +26,7 @@ class ProjectFragment : BaseVMFragment<ProjectFragViewModel, FragmentProjectBind
         lifecycleScope.launch {
             viewModel.types.collectLatest {
                 it.ifSuccess { types ->
-                    binding.vp2Project.adapter = StandardPagerAdapter(parentFragmentManager, lifecycle, types!!) { data, pos ->
+                    binding.vp2Project.adapter = StandardPagerAdapter(childFragmentManager, lifecycle, types!!) { data, pos ->
                         InnerProjectFragment.getInstance(data[pos].id)
                     }
                     TabLayoutMediator(binding.tlProject, binding.vp2Project) { tab, i ->
@@ -35,5 +35,9 @@ class ProjectFragment : BaseVMFragment<ProjectFragViewModel, FragmentProjectBind
                 }
             }
         }
+    }
+
+    override fun scrollToTop() {
+        (childFragmentManager.findFragmentByTag("f${binding.vp2Project.currentItem}") as BaseVMFragment<*,*>).scrollToTop()
     }
 }

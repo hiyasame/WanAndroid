@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="primaryColor">#455A64</color>
+    <color name="secondaryColor">#37474F</color>
+    <color name="primary_textColor">#ffffff</color>
+    <color name="secondary_textColor">#EEEEEE</color>
+    <color name="third_textColor">#bdbdbd</color>
+    <color name="backgroundColor">#424242</color>
+    <color name="collect_icon_tint">#CDF68A8A</color>
+    <color name="vertical_tab">#424242</color>
+    <color name="tag_color">#BDBDBD</color>
+    <color name="vertical_tab_tint">#757575</color>
+</resources>

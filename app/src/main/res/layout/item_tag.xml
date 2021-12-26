@@ -11,7 +11,7 @@
         android:layout_height="wrap_content">
 
         <TextView
-            android:background="#DDDDDD"
+            android:background="@color/tag_color"
             tools:text="国外大牛"
             android:paddingHorizontal="10dp"
             android:paddingVertical="10dp"

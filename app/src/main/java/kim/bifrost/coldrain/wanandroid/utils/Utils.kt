@@ -6,15 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.annotation.RequiresApi
-import androidx.databinding.ViewDataBinding
-import androidx.lifecycle.viewModelScope
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import kim.bifrost.coldrain.wanandroid.R
 import kim.bifrost.coldrain.wanandroid.base.BasePagingAdapter
-import kim.bifrost.coldrain.wanandroid.databinding.HomeRvItemBinding
 import kim.bifrost.coldrain.wanandroid.repo.data.UserData
 import kim.bifrost.coldrain.wanandroid.repo.remote.ApiService
 import kim.bifrost.coldrain.wanandroid.repo.remote.bean.ArticleData
-import kim.bifrost.coldrain.wanandroid.view.adapter.FindPagingDataAdapter
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -67,3 +65,11 @@ fun <T: BasePagingAdapter<*, ArticleData>> getCollectFunc(viewModelScope: Corout
             }
         }
     }
+
+fun RecyclerView.scrollToTop() {
+    if ((layoutManager as LinearLayoutManager).findFirstVisibleItemPosition() > 20) {
+        scrollToPosition(0)
+    } else {
+        smoothScrollToPosition(0)
+    }
+}

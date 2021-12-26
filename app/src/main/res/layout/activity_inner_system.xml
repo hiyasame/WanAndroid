@@ -19,14 +19,13 @@
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
+                android:background="@color/primaryColor"
                 android:layout_height="?attr/actionBarSize"
-                android:background="@color/design_default_color_primary"
-                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
                 app:layout_scrollFlags="scroll|enterAlways|snap" />
 
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/tl_inner_system"
+                android:background="@color/backgroundColor"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 app:tabIndicatorHeight="0dp"

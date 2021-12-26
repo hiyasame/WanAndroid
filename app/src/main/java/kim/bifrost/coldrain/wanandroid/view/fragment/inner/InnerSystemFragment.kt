@@ -14,6 +14,7 @@ import kim.bifrost.coldrain.wanandroid.view.viewmodel.frag.InnerSystemFragViewMo
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import androidx.recyclerview.widget.DividerItemDecoration
+import kim.bifrost.coldrain.wanandroid.utils.scrollToTop
 import kotlinx.coroutines.delay
 
 
@@ -56,12 +57,6 @@ class InnerSystemFragment : BaseVMFragment<InnerSystemFragViewModel, FragmentInn
     }
 
     override fun scrollToTop() {
-        binding.rvInnerSystem.run {
-            if ((layoutManager as LinearLayoutManager).findFirstVisibleItemPosition() > 20) {
-                scrollToPosition(0)
-            } else {
-                smoothScrollToPosition(0)
-            }
-        }
+        binding.rvInnerSystem.scrollToTop()
     }
 }

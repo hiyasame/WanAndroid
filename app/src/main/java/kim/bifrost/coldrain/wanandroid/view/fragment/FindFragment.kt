@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import kim.bifrost.coldrain.wanandroid.base.BaseFragment
 import kim.bifrost.coldrain.wanandroid.base.BaseVMFragment
 import kim.bifrost.coldrain.wanandroid.databinding.FragmentFindBinding
+import kim.bifrost.coldrain.wanandroid.utils.scrollToTop
 import kim.bifrost.coldrain.wanandroid.utils.toast
 import kim.bifrost.coldrain.wanandroid.view.adapter.FindPagingDataAdapter
 import kim.bifrost.coldrain.wanandroid.view.viewmodel.frag.FindFragViewModel
@@ -56,12 +57,6 @@ class FindFragment : BaseVMFragment<FindFragViewModel, FragmentFindBinding>() {
     }
 
     override fun scrollToTop() {
-        binding.rvFind.run {
-            if ((layoutManager as LinearLayoutManager).findFirstVisibleItemPosition() > 20) {
-                scrollToPosition(0)
-            } else {
-                smoothScrollToPosition(0)
-            }
-        }
+        binding.rvFind.scrollToTop()
     }
 }

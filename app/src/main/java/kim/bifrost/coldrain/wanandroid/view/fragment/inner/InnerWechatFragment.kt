@@ -8,6 +8,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import kim.bifrost.coldrain.wanandroid.base.BaseVMFragment
 import kim.bifrost.coldrain.wanandroid.databinding.FragmentInnerWechatBinding
+import kim.bifrost.coldrain.wanandroid.utils.scrollToTop
 import kim.bifrost.coldrain.wanandroid.view.adapter.InnerWechatPagingDataAdapter
 import kim.bifrost.coldrain.wanandroid.view.viewmodel.frag.InnerWechatFragViewModel
 import kotlinx.coroutines.flow.collectLatest
@@ -41,13 +42,7 @@ class InnerWechatFragment : BaseVMFragment<InnerWechatFragViewModel, FragmentInn
     ): FragmentInnerWechatBinding = FragmentInnerWechatBinding.inflate(inflater, container, boolean)
 
     override fun scrollToTop() {
-        binding.rvInnerWechat.run {
-            if ((layoutManager as LinearLayoutManager).findFirstVisibleItemPosition() > 20) {
-                scrollToPosition(0)
-            } else {
-                smoothScrollToPosition(0)
-            }
-        }
+        binding.rvInnerWechat.scrollToTop()
     }
 
     companion object {

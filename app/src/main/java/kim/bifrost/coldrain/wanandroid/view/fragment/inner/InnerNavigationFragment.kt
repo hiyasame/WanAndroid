@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import kim.bifrost.coldrain.wanandroid.R
 import kim.bifrost.coldrain.wanandroid.base.BaseVMFragment
 import kim.bifrost.coldrain.wanandroid.databinding.FragmentInnerNavigationBinding
+import kim.bifrost.coldrain.wanandroid.utils.scrollToTop
 import kim.bifrost.coldrain.wanandroid.view.adapter.NavigationRvAdapter
 import kim.bifrost.coldrain.wanandroid.view.viewmodel.frag.InnerNavigationFragViewModel
 import kotlinx.coroutines.flow.collectLatest
@@ -72,12 +73,6 @@ class InnerNavigationFragment :
 
     override fun scrollToTop() {
         binding.vtlNavigation.setTabSelected(0)
-        binding.rvNavigation.run {
-            if ((layoutManager as LinearLayoutManager).findFirstVisibleItemPosition() > 20) {
-                scrollToPosition(0)
-            } else {
-                smoothScrollToPosition(0)
-            }
-        }
+        binding.rvNavigation.scrollToTop()
     }
 }

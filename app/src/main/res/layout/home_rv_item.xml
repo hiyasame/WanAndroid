@@ -31,7 +31,8 @@
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:src="@drawable/ic_like"
-            tools:tint="#CDF68A8A" />
+            tools:tint="@color/collect_icon_tint"
+            tools:ignore="ContentDescription" />
 
         <LinearLayout
             android:orientation="vertical"

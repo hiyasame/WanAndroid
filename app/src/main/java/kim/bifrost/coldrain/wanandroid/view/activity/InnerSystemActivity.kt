@@ -7,6 +7,7 @@ import android.view.MenuItem
 import android.view.View
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.PagingData
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.tabs.TabLayoutMediator
 import kim.bifrost.coldrain.wanandroid.App
 import kim.bifrost.coldrain.wanandroid.R
@@ -16,6 +17,7 @@ import kim.bifrost.coldrain.wanandroid.databinding.ActivityInnerSystemBinding
 import kim.bifrost.coldrain.wanandroid.databinding.HomeRvItemBinding
 import kim.bifrost.coldrain.wanandroid.repo.remote.bean.ArticleData
 import kim.bifrost.coldrain.wanandroid.repo.remote.bean.SystemData
+import kim.bifrost.coldrain.wanandroid.utils.scrollToTop
 import kim.bifrost.coldrain.wanandroid.view.adapter.InnerRvPagingAdapter
 import kim.bifrost.coldrain.wanandroid.view.adapter.RVItemPagerAdapter
 import kim.bifrost.coldrain.wanandroid.view.adapter.StandardPagerAdapter
@@ -43,6 +45,11 @@ class InnerSystemActivity : BaseVMActivity<InnerSystemViewModel, ActivityInnerSy
         TabLayoutMediator(binding.tlInnerSystem, binding.vpInnerSystem) { tab, i ->
             tab.text = data.children[i].name
         }.attach()
+        binding.floatingActionBtn.setOnClickListener {
+            ((binding.vpInnerSystem.getChildAt(0) as RecyclerView)
+                .layoutManager!!.findViewByPosition(binding.vpInnerSystem.currentItem) as RecyclerView)
+                .scrollToTop()
+        }
     }
 
     override fun getViewBinding(): ActivityInnerSystemBinding = ActivityInnerSystemBinding.inflate(layoutInflater)

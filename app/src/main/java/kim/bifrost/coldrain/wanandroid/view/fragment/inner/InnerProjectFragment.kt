@@ -9,6 +9,7 @@ import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import kim.bifrost.coldrain.wanandroid.base.BaseVMFragment
 import kim.bifrost.coldrain.wanandroid.databinding.FragmentInnerProjectBinding
+import kim.bifrost.coldrain.wanandroid.utils.scrollToTop
 import kim.bifrost.coldrain.wanandroid.utils.toast
 import kim.bifrost.coldrain.wanandroid.view.adapter.InnerProjectRvAdapter
 import kim.bifrost.coldrain.wanandroid.view.viewmodel.frag.InnerProjectFragViewModel
@@ -59,6 +60,10 @@ class InnerProjectFragment : BaseVMFragment<InnerProjectFragViewModel, FragmentI
                 }
             }
         }
+    }
+
+    override fun scrollToTop() {
+        binding.rvInnerProject.scrollToTop()
     }
 
     companion object {

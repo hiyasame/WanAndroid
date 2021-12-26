@@ -18,4 +18,16 @@
     <color name="Grey700">#616161</color>
     <color name="Grey800">#424242</color>
     <color name="Grey900">#212121</color>
+
+    <color name="primaryColor">#448AFF</color>
+    <color name="secondaryColor">#2979FF</color>
+    <color name="primary_textColor">#ffffff</color>
+    <color name="secondary_textColor">#000000</color>
+    <color name="third_textColor">#bdbdbd</color>
+    <color name="backgroundColor">#FFFFFF</color>
+    <color name="collect_icon_tint">#CDF68A8A</color>
+    <color name="vertical_tab">#F5F5F5</color>
+    <color name="tag_color">#DDDDDD</color>
+    <color name="vertical_tab_tint">#FFFFFF</color>
+
 </resources>

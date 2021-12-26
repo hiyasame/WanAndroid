@@ -15,6 +15,7 @@
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tl_system"
+            android:background="@color/backgroundColor"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             app:tabIndicatorHeight="0dp"

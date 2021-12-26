@@ -44,7 +44,6 @@ class RegisterViewModel(
                 data.success().then {
                     // 注册成功逻辑
                     toastConcurrent("注册成功!")
-                    UserData.isLogged = true
                     UserData.userInfoData = ApiService.info().data
                     _registerLiveData.postValue(true)
                 }

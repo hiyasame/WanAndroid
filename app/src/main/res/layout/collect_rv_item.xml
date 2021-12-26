@@ -62,7 +62,8 @@
                 android:src="@drawable/ic_like"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                app:tint="#CDF68A8A" />
+                app:tint="@color/collect_icon_tint"
+                tools:ignore="ContentDescription" />
 
         </RelativeLayout>
 

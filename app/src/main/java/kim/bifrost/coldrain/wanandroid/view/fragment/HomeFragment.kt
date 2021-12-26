@@ -14,6 +14,7 @@ import kim.bifrost.coldrain.wanandroid.App
 import kim.bifrost.coldrain.wanandroid.base.BaseVMFragment
 import kim.bifrost.coldrain.wanandroid.databinding.FragmentHomeBinding
 import kim.bifrost.coldrain.wanandroid.databinding.HomeVpBinding
+import kim.bifrost.coldrain.wanandroid.utils.scrollToTop
 import kim.bifrost.coldrain.wanandroid.utils.toast
 import kim.bifrost.coldrain.wanandroid.view.activity.WebPageActivity
 import kim.bifrost.coldrain.wanandroid.view.adapter.HomePagingDataAdapter
@@ -110,12 +111,6 @@ class HomeFragment : BaseVMFragment<HomeFragViewModel, FragmentHomeBinding>() {
     }
 
     override fun scrollToTop() {
-        binding.rvHome.run {
-            if ((layoutManager as LinearLayoutManager).findFirstVisibleItemPosition() > 20) {
-                scrollToPosition(0)
-            } else {
-                smoothScrollToPosition(0)
-            }
-        }
+        binding.rvHome.scrollToTop()
     }
 }

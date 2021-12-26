@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:text="@string/user_login"
             android:textSize="18sp"
-            android:textColor="@color/black"
+            android:textColor="@color/secondary_textColor"
             android:layout_marginTop="30dp"
             android:layout_marginBottom="5dp"
             android:layout_marginStart="20dp" />
@@ -47,7 +47,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
-                app:boxBackgroundColor="@color/white"
+                app:boxBackgroundColor="@color/backgroundColor"
                 android:focusable="true"
                 android:focusableInTouchMode="true">
 
@@ -65,7 +65,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
-                app:boxBackgroundColor="@color/white"
+                app:boxBackgroundColor="@color/backgroundColor"
                 app:passwordToggleEnabled="true"
                 android:focusable="true"
                 android:focusableInTouchMode="true">

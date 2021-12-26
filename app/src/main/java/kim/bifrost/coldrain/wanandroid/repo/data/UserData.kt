@@ -15,7 +15,8 @@ import kim.bifrost.coldrain.wanandroid.repo.remote.bean.UserInfoData
  **/
 object UserData {
 
-    var isLogged = false
+    val isLogged: Boolean
+        get() = App.cookieData.getString("cookie", null) != null
     var userInfoData: UserInfoData? = null
         set(value) {
             localData.edit {
@@ -28,10 +29,9 @@ object UserData {
     private val localData = App.context.getSharedPreferences("userdata", Context.MODE_PRIVATE)
 
     init {
-        isLogged = App.cookieData
-            .getString("cookie", null) != null
-        userInfoData =
-            App.gson.fromJson(localData.getString("userInfoData", ""), UserInfoData::class.java)
+        localData.getString("userInfoData", null)?.let {
+            userInfoData = App.gson.fromJson(it, UserInfoData::class.java)
+        }
     }
 
     // 释放
