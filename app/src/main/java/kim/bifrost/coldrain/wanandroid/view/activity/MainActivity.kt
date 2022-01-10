@@ -103,10 +103,19 @@ class MainActivity : BaseVMActivity<MainViewModel, ActivityMainBinding>(isCancel
                 }
                 // 收藏
                 R.id.myCollections -> {
-//                    Log.d("Test", "(MainActivity.kt:31) ==> ${App.cookieData.getString("cookie", "null")}")
                     // 登录则进入界面
                     if (UserData.isLogged) {
                         startActivity(Intent(this, CollectActivity::class.java))
+                    } else {
+                        // 未登录则进入登录界面
+                        LoginActivity.start(this)
+                    }
+                }
+                // 积分
+                R.id.myPoints -> {
+                    // 登录则进入界面
+                    if (UserData.isLogged) {
+                        startActivity(Intent(this, PointActivity::class.java))
                     } else {
                         // 未登录则进入登录界面
                         LoginActivity.start(this)

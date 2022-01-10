@@ -10,7 +10,6 @@ import kim.bifrost.coldrain.wanandroid.R
 import kim.bifrost.coldrain.wanandroid.base.BasePagingAdapter
 import kim.bifrost.coldrain.wanandroid.databinding.HomeRvItemBinding
 import kim.bifrost.coldrain.wanandroid.repo.remote.bean.ArticleData
-import kim.bifrost.coldrain.wanandroid.repo.remote.bean.PagerArticlesData
 import kim.bifrost.coldrain.wanandroid.view.activity.WebPageActivity
 
 /**

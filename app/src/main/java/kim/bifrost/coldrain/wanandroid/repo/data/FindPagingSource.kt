@@ -3,7 +3,6 @@ package kim.bifrost.coldrain.wanandroid.repo.data
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import kim.bifrost.coldrain.wanandroid.repo.remote.bean.ArticleData
-import kim.bifrost.coldrain.wanandroid.repo.remote.bean.PagerArticlesData
 
 /**
  * kim.bifrost.coldrain.wanandroid.repo.data.FindPagingSource

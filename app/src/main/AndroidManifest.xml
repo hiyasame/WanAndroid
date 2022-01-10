@@ -16,6 +16,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
         <activity
+            android:name=".view.activity.PointActivity"
+            android:exported="true" />
+        <activity
             android:name=".view.activity.InnerSystemActivity"
             android:exported="true" />
         <activity

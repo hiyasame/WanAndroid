@@ -141,7 +141,7 @@ interface ApiService {
      * @return
      */
     @GET("user_article/list/{page}/json")
-    fun getSquareData(@Path("page") page: Int, @Query("page_size") pageSize: Int): Call<NetResponse<PagerArticlesData>>
+    fun getSquareData(@Path("page") page: Int, @Query("page_size") pageSize: Int): Call<NetResponse<PagerData<ArticleData>>>
 
     /**
      * 微信公众号文章类别
@@ -187,7 +187,7 @@ interface ApiService {
      * @return
      */
     @GET("article/list/{page}/json")
-    fun getSystemDataArticles(@Path("page") page: Int, @Query("cid") cid: Int, @Query("page_size") pageSize: Int): Call<NetResponse<PagerArticlesData>>
+    fun getSystemDataArticles(@Path("page") page: Int, @Query("cid") cid: Int, @Query("page_size") pageSize: Int): Call<NetResponse<PagerData<ArticleData>>>
 
     /**
      * 获取项目类型
@@ -197,9 +197,30 @@ interface ApiService {
     @GET("project/tree/json")
     fun getProjectTypes(): Call<NetResponse<List<ProjectTypeData>>>
 
-    @GET("/project/list/{page}/json")
-    fun getProjectData(@Path("page") page: Int, @Query("cid") cid: Int, @Query("page_size") pageSize: Int): Call<NetResponse<PagerArticlesData>>
+    /**
+     * 项目文章
+     *
+     * @param page
+     * @param cid
+     * @param pageSize
+     * @return
+     */
+    @GET("project/list/{page}/json")
+    fun getProjectData(@Path("page") page: Int, @Query("cid") cid: Int, @Query("page_size") pageSize: Int): Call<NetResponse<PagerData<ArticleData>>>
 
+    /**
+     * 积分变动
+     *
+     * @return
+     */
+    @GET("lg/coin/list/1/json")
+    suspend fun getPointChangeList(): NetResponse<PagerData<PointChangeData>>
+
+    @GET("lg/coin/userinfo/json")
+    suspend fun getPointProfile(): NetResponse<PointData>
+
+    // 你妈 这什么牛马写法
+    // 直接实现接口加委托不香吗
     companion object {
         suspend fun login(username: String, password: String) =
             RetrofitHelper.service.loginWanAndroid(username, password).await()
@@ -223,5 +244,7 @@ interface ApiService {
         suspend fun getSystemDataArticles(page: Int, cid: Int, pageSize: Int) = RetrofitHelper.service.getSystemDataArticles(page, cid, pageSize).await()
         suspend fun getProjectType() = RetrofitHelper.service.getProjectTypes().await()
         suspend fun getProjectData(page: Int, cid: Int, pageSize: Int) = RetrofitHelper.service.getProjectData(page, cid, pageSize).await()
+        suspend fun getPointChangeList() = RetrofitHelper.service.getPointChangeList()
+        suspend fun getPointProfile() = RetrofitHelper.service.getPointProfile()
     }
 }

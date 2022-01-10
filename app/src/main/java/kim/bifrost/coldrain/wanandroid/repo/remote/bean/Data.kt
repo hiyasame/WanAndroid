@@ -1,5 +1,8 @@
 package kim.bifrost.coldrain.wanandroid.repo.remote.bean
 
+import androidx.core.text.htmlEncode
+import kim.bifrost.coldrain.wanandroid.utils.htmlDecode
+
 /**
  * kim.bifrost.coldrain.wanandroid.api.bean.Data
  * WanAndroid
@@ -86,12 +89,16 @@ data class ArticleData(
     val superChapterId: Int,
     val superChapterName: String,
     val tags: List<Tag>,
-    val title: String,
+    var title: String,
     val type: Int,
     val userId: Int,
     val visible: Int,
     val zan: Int,
 ) {
+    init {
+        title = title.htmlEncode()
+    }
+
     data class Tag(
         val name: String,
         val url: String,
@@ -127,9 +134,9 @@ data class CollectionData(
     )
 }
 
-data class PagerArticlesData(
+data class PagerData<T>(
     val curPage: Int,
-    val datas: List<ArticleData>,
+    val datas: List<T>,
     val offset: Int,
     val over: Boolean,
     val pageCount: Int,
@@ -173,4 +180,22 @@ data class ProjectTypeData(
     val parentChapterId: Int,
     val userControlSetTop: Boolean,
     val visible: Int
+)
+
+data class PointChangeData(
+    val coinCount: Int,
+    val date: Long,
+    val desc: String,
+    val id: Int,
+    val reason: String,
+    val type: Int,
+    val userId: Int,
+    val userName: String
+)
+
+data class PointData(
+    val coinCount: Int,
+    val rank: Int,
+    val userId: Int,
+    val username: String
 )

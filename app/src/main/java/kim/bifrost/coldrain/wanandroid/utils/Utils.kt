@@ -17,6 +17,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.net.URLDecoder
 import kotlin.random.Random
 
 /**
@@ -73,3 +74,5 @@ fun RecyclerView.scrollToTop() {
         smoothScrollToPosition(0)
     }
 }
+
+fun String.htmlDecode(): String = URLDecoder.decode(this, "utf-8")
