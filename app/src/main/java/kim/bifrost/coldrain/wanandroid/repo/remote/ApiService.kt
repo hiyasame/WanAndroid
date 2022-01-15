@@ -22,10 +22,10 @@ interface ApiService {
      */
     @POST("user/login")
     @FormUrlEncoded
-    fun loginWanAndroid(
+    suspend fun loginWanAndroid(
         @Field("username") username: String,
         @Field("password") password: String,
-    ): Call<NetResponse<LoginData>>
+    ): NetResponse<LoginData>
 
     /**
      * 注册
@@ -36,11 +36,11 @@ interface ApiService {
      */
     @POST("user/register")
     @FormUrlEncoded
-    fun registerWanAndroid(
+    suspend fun registerWanAndroid(
         @Field("username") username: String,
         @Field("password") password: String,
         @Field("repassword") repassword: String,
-    ): Call<NetResponse<LoginData>>
+    ): NetResponse<LoginData>
 
     /**
      * 获取用户信息，需要cookie
@@ -48,7 +48,7 @@ interface ApiService {
      * @return 用户信息
      */
     @GET("user/lg/userinfo/json")
-    fun getInfo(): Call<NetResponse<UserInfoData>>
+    suspend fun getInfo(): NetResponse<UserInfoData>
 
     /**
      * 获取Banner
@@ -56,7 +56,7 @@ interface ApiService {
      * @return
      */
     @GET("banner/json")
-    fun getBanner(): Call<NetResponse<List<BannerData>>>
+    suspend fun getBanner(): NetResponse<List<BannerData>>
 
     /**
      * 获取文章
@@ -66,10 +66,10 @@ interface ApiService {
      * @return data
      */
     @GET("article/list/{page}/json")
-    fun getArticles(
+    suspend fun getArticles(
         @Path("page") page: Int,
         @Query("page_size") pageSize: Int,
-    ): Call<NetResponse<ArticlesData>>
+    ): NetResponse<ArticlesData>
 
     /**
      * 获取置顶文章
@@ -77,7 +77,7 @@ interface ApiService {
      * @return data
      */
     @GET("article/top/json")
-    fun getTopArticles(): Call<NetResponse<List<ArticleData>>>
+    suspend fun getTopArticles(): NetResponse<List<ArticleData>>
 
     /**
      * 获取用户个人收藏文章
@@ -88,10 +88,10 @@ interface ApiService {
      * @return data
      */
     @GET("lg/collect/list/{page}/json")
-    fun getCollections(
+    suspend fun getCollections(
         @Path("page") page: Int,
         @Query("page_size") pageSize: Int,
-    ): Call<NetResponse<CollectionData>>
+    ): NetResponse<CollectionData>
 
 
     /**
@@ -104,7 +104,7 @@ interface ApiService {
      * @return data
      */
     @POST("lg/collect/{id}/json")
-    fun collectArticle(@Path("id") id: Int): Call<NetResponse<Any?>>
+    suspend fun collectArticle(@Path("id") id: Int): NetResponse<Any?>
 
     /**
      * 收藏站外文章
@@ -116,12 +116,12 @@ interface ApiService {
      * @return
      */
     @POST("lg/collect/user_article/update/{id}/json")
-    fun collectWebArticle(
+    suspend fun collectWebArticle(
         @Path("id") id: Int,
         @Query("title") title: String,
         @Query("link") link: String,
         @Query("author") author: String,
-    ): Call<NetResponse<Any?>>
+    ): NetResponse<Any?>
 
     /**
      * 取消收藏
@@ -130,7 +130,7 @@ interface ApiService {
      * @return
      */
     @POST("/lg/uncollect_originId/{id}/json")
-    fun unCollectArticle(@Path("id") id: Int): Call<NetResponse<Any?>>
+    suspend fun unCollectArticle(@Path("id") id: Int): NetResponse<Any?>
 
     /**
      * 广场列表数据
@@ -141,7 +141,7 @@ interface ApiService {
      * @return
      */
     @GET("user_article/list/{page}/json")
-    fun getSquareData(@Path("page") page: Int, @Query("page_size") pageSize: Int): Call<NetResponse<PagerData<ArticleData>>>
+    suspend fun getSquareData(@Path("page") page: Int, @Query("page_size") pageSize: Int): NetResponse<PagerData<ArticleData>>
 
     /**
      * 微信公众号文章类别
@@ -149,7 +149,7 @@ interface ApiService {
      * @return
      */
     @GET("wxarticle/chapters/json")
-    fun getWxArticle(): Call<NetResponse<List<WxArticleType>>>
+    suspend fun getWxArticle(): NetResponse<List<WxArticleType>>
 
     /**
      * 微信公众号历史文章
@@ -160,7 +160,7 @@ interface ApiService {
      * @return
      */
     @GET("wxarticle/list/{cid}/{page}/json")
-    fun getWxHistoryArticles(@Path("cid") cid: Int, @Path("page") page: Int, @Query("page_size") pageSize: Int): Call<NetResponse<ArticlesData>>
+    suspend fun getWxHistoryArticles(@Path("cid") cid: Int, @Path("page") page: Int, @Query("page_size") pageSize: Int): NetResponse<ArticlesData>
 
     /**
      * 获取体系数据
@@ -168,7 +168,7 @@ interface ApiService {
      * @return
      */
     @GET("tree/json")
-    fun getSystemData(): Call<NetResponse<List<SystemData>>>
+    suspend fun getSystemData(): NetResponse<List<SystemData>>
 
     /**
      * 获取导航数据
@@ -176,7 +176,7 @@ interface ApiService {
      * @return
      */
     @GET("navi/json")
-    fun getNavigationData(): Call<NetResponse<List<NavigationData>>>
+    suspend fun getNavigationData(): NetResponse<List<NavigationData>>
 
     /**
      * 获取体系文章
@@ -187,7 +187,7 @@ interface ApiService {
      * @return
      */
     @GET("article/list/{page}/json")
-    fun getSystemDataArticles(@Path("page") page: Int, @Query("cid") cid: Int, @Query("page_size") pageSize: Int): Call<NetResponse<PagerData<ArticleData>>>
+    suspend fun getSystemDataArticles(@Path("page") page: Int, @Query("cid") cid: Int, @Query("page_size") pageSize: Int): NetResponse<PagerData<ArticleData>>
 
     /**
      * 获取项目类型
@@ -195,7 +195,7 @@ interface ApiService {
      * @return
      */
     @GET("project/tree/json")
-    fun getProjectTypes(): Call<NetResponse<List<ProjectTypeData>>>
+    suspend fun getProjectTypes(): NetResponse<List<ProjectTypeData>>
 
     /**
      * 项目文章
@@ -206,7 +206,7 @@ interface ApiService {
      * @return
      */
     @GET("project/list/{page}/json")
-    fun getProjectData(@Path("page") page: Int, @Query("cid") cid: Int, @Query("page_size") pageSize: Int): Call<NetResponse<PagerData<ArticleData>>>
+    suspend fun getProjectData(@Path("page") page: Int, @Query("cid") cid: Int, @Query("page_size") pageSize: Int): NetResponse<PagerData<ArticleData>>
 
     /**
      * 积分变动
@@ -216,35 +216,32 @@ interface ApiService {
     @GET("lg/coin/list/1/json")
     suspend fun getPointChangeList(): NetResponse<PagerData<PointChangeData>>
 
+    /**
+     * 获取积分信息
+     *
+     * @return
+     */
     @GET("lg/coin/userinfo/json")
     suspend fun getPointProfile(): NetResponse<PointData>
 
-    // 你妈 这什么牛马写法
-    // 直接实现接口加委托不香吗
-    companion object {
-        suspend fun login(username: String, password: String) =
-            RetrofitHelper.service.loginWanAndroid(username, password).await()
-        suspend fun register(username: String, password: String, repassword: String) =
-            RetrofitHelper.service.registerWanAndroid(username, password, repassword).await()
-        suspend fun info() = RetrofitHelper.service.getInfo().await()
-        suspend fun banners() = RetrofitHelper.service.getBanner().await()
-        suspend fun articles(page: Int, pageSize: Int) =
-            RetrofitHelper.service.getArticles(page, pageSize).await()
-        suspend fun topArticles() = RetrofitHelper.service.getTopArticles().await()
-        suspend fun collections(page: Int, pageSize: Int) =
-            RetrofitHelper.service.getCollections(page, pageSize).await()
-        suspend fun collect(id: Int) = RetrofitHelper.service.collectArticle(id).await()
-        suspend fun uncollect(id: Int) = RetrofitHelper.service.unCollectArticle(id).await()
-        suspend fun squareData(page: Int, pageSize: Int) =
-            RetrofitHelper.service.getSquareData(page, pageSize).await()
-        suspend fun wxArticles() = RetrofitHelper.service.getWxArticle().await()
-        suspend fun wxHistoryArticles(cid: Int, page: Int, pageSize: Int) = RetrofitHelper.service.getWxHistoryArticles(cid, page, pageSize).await()
-        suspend fun systemData() = RetrofitHelper.service.getSystemData().await()
-        suspend fun getNavigationData() = RetrofitHelper.service.getNavigationData().await()
-        suspend fun getSystemDataArticles(page: Int, cid: Int, pageSize: Int) = RetrofitHelper.service.getSystemDataArticles(page, cid, pageSize).await()
-        suspend fun getProjectType() = RetrofitHelper.service.getProjectTypes().await()
-        suspend fun getProjectData(page: Int, cid: Int, pageSize: Int) = RetrofitHelper.service.getProjectData(page, cid, pageSize).await()
-        suspend fun getPointChangeList() = RetrofitHelper.service.getPointChangeList()
-        suspend fun getPointProfile() = RetrofitHelper.service.getPointProfile()
-    }
+    /**
+     * 获取热词
+     *
+     * @return
+     */
+    @GET("hotkey/json")
+    suspend fun getHotKeys(): NetResponse<List<HotKeyData>>
+
+    /**
+     * 搜索文章
+     *
+     * @param key 关键词
+     * @param page_size
+     * @param page 从0开始
+     * @return
+     */
+    @POST("article/query/{page}/json")
+    suspend fun search(@Path("page") page: Int , @Query("k") key: String, @Query("page_size") page_size: Int): NetResponse<PagerData<ArticleData>>
+
+    companion object: ApiService by RetrofitHelper.service
 }

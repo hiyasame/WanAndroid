@@ -16,6 +16,7 @@ import kim.bifrost.coldrain.wanandroid.R
 import kim.bifrost.coldrain.wanandroid.databinding.HomeRvItemBinding
 import kim.bifrost.coldrain.wanandroid.databinding.HomeVpBinding
 import kim.bifrost.coldrain.wanandroid.repo.remote.bean.ArticleData
+import kim.bifrost.coldrain.wanandroid.utils.htmlDecode
 import kim.bifrost.coldrain.wanandroid.view.activity.WebPageActivity
 
 /**
@@ -41,7 +42,7 @@ class HomePagingDataAdapter(private val context: Context, val callback: CallBack
         }
         val data = getItem(position)!!
         holder.view.apply {
-            findViewById<TextView>(R.id.homeRvTitle).text = data.title
+            findViewById<TextView>(R.id.homeRvTitle).text = data.title.htmlDecode()
             findViewById<TextView>(R.id.homeRvDate).text = data.niceDate
             findViewById<TextView>(R.id.homeRvHead).text =
                 if (data.author.isEmpty()) data.shareUser else data.author

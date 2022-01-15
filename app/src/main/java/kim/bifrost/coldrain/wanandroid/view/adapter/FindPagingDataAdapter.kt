@@ -3,13 +3,16 @@ package kim.bifrost.coldrain.wanandroid.view.adapter
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import kim.bifrost.coldrain.wanandroid.R
 import kim.bifrost.coldrain.wanandroid.base.BasePagingAdapter
 import kim.bifrost.coldrain.wanandroid.databinding.HomeRvItemBinding
 import kim.bifrost.coldrain.wanandroid.repo.remote.bean.ArticleData
+import kim.bifrost.coldrain.wanandroid.utils.htmlDecode
 import kim.bifrost.coldrain.wanandroid.view.activity.WebPageActivity
 
 /**
@@ -23,11 +26,12 @@ class FindPagingDataAdapter(context: Context, private val callback: Holder<HomeR
     override fun getDataBinding(parent: ViewGroup, viewType: Int): HomeRvItemBinding =
         HomeRvItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 
+    @RequiresApi(Build.VERSION_CODES.N)
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: Holder<HomeRvItemBinding>, position: Int) {
         holder.binding.apply {
             val data = getItem(position)!!
-            homeRvTitle.text = data.title
+            homeRvTitle.text = data.title.htmlDecode()
             homeRvDate.text = data.niceDate
             homeRvHead.text = if (data.author.isNotEmpty()) data.author else data.shareUser
             homeRvLabel.text = data.superChapterName + "/" + data.chapterName

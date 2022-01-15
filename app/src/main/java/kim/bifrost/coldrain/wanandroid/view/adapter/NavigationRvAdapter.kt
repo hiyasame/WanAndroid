@@ -16,7 +16,9 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import kim.bifrost.coldrain.wanandroid.databinding.ItemNavigationListBinding
 import kim.bifrost.coldrain.wanandroid.repo.remote.bean.NavigationData
 import kim.bifrost.coldrain.wanandroid.utils.getMarginLayoutParams
+import kim.bifrost.coldrain.wanandroid.utils.htmlDecode
 import kim.bifrost.coldrain.wanandroid.utils.randomColor
+import kim.bifrost.coldrain.wanandroid.utils.tag
 import kim.bifrost.coldrain.wanandroid.view.activity.WebPageActivity
 
 /**
@@ -38,20 +40,16 @@ class NavigationRvAdapter(private val context: Context, private val data: List<N
     override fun onBindViewHolder(holder: Holder, position: Int) {
         val data = data[position]
         holder.binding.apply {
-            title.text = data.name
+            title.text = data.name.htmlDecode()
             data.articles.forEach {
-                val tv = TextView(context).apply {
-                    setPadding(30)
-                    setTextSize(TypedValue.COMPLEX_UNIT_SP, 16F)
-                    text = it.title
-                    layoutParams = (tagLayout.layoutParams as ViewGroup.MarginLayoutParams).apply { setMargins(15, 10, 15, 10) }
-                    setBackgroundColor(Color.parseColor("#CBEDEDED"))
-                    setTextColor(randomColor().toArgb())
-                    setOnClickListener { _ ->
-                        WebPageActivity.startActivity(context, it.link, it.title)
-                    }
+                val tag = tagLayout.tag(
+                    context,
+                    it.title,
+                    randomColor()
+                ) { _ ->
+                    WebPageActivity.startActivity(context, it.link, it.title)
                 }
-                tagLayout.addView(tv)
+                tagLayout.addView(tag)
             }
         }
     }

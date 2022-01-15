@@ -3,6 +3,8 @@ package kim.bifrost.coldrain.wanandroid.base
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import kim.bifrost.coldrain.wanandroid.utils.elseThen
+import kim.bifrost.coldrain.wanandroid.utils.then
 import java.lang.reflect.ParameterizedType
 
 /**
@@ -17,8 +19,13 @@ abstract class BaseVMActivity<VM : ViewModel, DB : ViewDataBinding>(isCancelStat
         isCancelStatusBar
     ) {
     protected val viewModel by lazy {
-        ViewModelProvider(this)[getViewModelClass()]
+        if (viewModelFactory == null)
+            ViewModelProvider(this)[getViewModelClass()]
+        else
+            ViewModelProvider(this, viewModelFactory!!)[getViewModelClass()]
     }
+
+    open val viewModelFactory: ViewModelProvider.Factory? = null
 
     // 获得ViewModel的Class
     // class里的泛型没法实化，只能曲线救国

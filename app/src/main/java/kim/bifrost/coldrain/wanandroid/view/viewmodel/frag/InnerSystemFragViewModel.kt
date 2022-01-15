@@ -13,6 +13,6 @@ import kotlinx.coroutines.flow.flow
  **/
 class InnerSystemFragViewModel : ViewModel() {
     val systemData = flow {
-        emit(ApiService.systemData())
+        emit(ApiService.getSystemData())
     }
 }

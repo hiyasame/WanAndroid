@@ -16,7 +16,6 @@ import kim.bifrost.coldrain.wanandroid.repo.remote.ApiService
 import kim.bifrost.coldrain.wanandroid.repo.remote.bean.ArticleData
 import kim.bifrost.coldrain.wanandroid.utils.toast
 import kim.bifrost.coldrain.wanandroid.utils.toastConcurrent
-import kim.bifrost.coldrain.wanandroid.view.adapter.FindPagingDataAdapter
 import kim.bifrost.coldrain.wanandroid.view.adapter.InnerWechatPagingDataAdapter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -51,7 +50,7 @@ class InnerWechatFragViewModel : ViewModel() {
                     val data = adapter.getItemOut(bindingAdapterPosition)!!
                     viewModelScope.launch(Dispatchers.IO) {
                         if (data.collect) {
-                            ApiService.uncollect(data.id).ifSuccess {
+                            ApiService.unCollectArticle(data.id).ifSuccess {
                                 withContext(Dispatchers.Main) {
                                     toast("已取消收藏")
                                     data.collect = false
@@ -63,7 +62,7 @@ class InnerWechatFragViewModel : ViewModel() {
                                 toastConcurrent("网络请求失败: $it")
                             }
                         } else {
-                            ApiService.collect(data.id).ifSuccess {
+                            ApiService.collectArticle(data.id).ifSuccess {
                                 withContext(Dispatchers.Main) {
                                     toastConcurrent("已收藏")
                                     data.collect = true

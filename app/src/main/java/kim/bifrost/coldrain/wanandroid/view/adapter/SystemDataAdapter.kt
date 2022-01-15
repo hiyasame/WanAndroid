@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kim.bifrost.coldrain.wanandroid.databinding.ItemRvInnerSystemBinding
 import kim.bifrost.coldrain.wanandroid.repo.remote.bean.SystemData
+import kim.bifrost.coldrain.wanandroid.utils.htmlDecode
 import kim.bifrost.coldrain.wanandroid.view.activity.InnerSystemActivity
 import java.lang.StringBuilder
 
@@ -33,7 +34,7 @@ class SystemDataAdapter(private val context: Context, private val data: List<Sys
         val data = data[position]
         val children = data.children
         holder.binding.apply {
-            title.text = data.name
+            title.text = data.name.htmlDecode()
             content.text = StringBuilder().apply {
                 val iter = children.iterator()
                 while (iter.hasNext()) {

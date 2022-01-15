@@ -11,6 +11,7 @@ import kim.bifrost.coldrain.wanandroid.R
 import kim.bifrost.coldrain.wanandroid.base.BasePagingAdapter
 import kim.bifrost.coldrain.wanandroid.databinding.ItemInnerProjectBinding
 import kim.bifrost.coldrain.wanandroid.repo.remote.bean.ArticleData
+import kim.bifrost.coldrain.wanandroid.utils.htmlDecode
 import kim.bifrost.coldrain.wanandroid.view.activity.WebPageActivity
 
 /**
@@ -33,7 +34,7 @@ class InnerProjectRvAdapter(context: Context, private val callback: Holder<ItemI
             Glide.with(image)
                 .load(data.envelopePic)
                 .into(image)
-            title.text = data.title
+            title.text = data.title.htmlDecode()
             if (data.collect) {
                 collectButton.setImageResource(R.drawable.ic_like)
                 collectButton.setColorFilter(Color.parseColor("#CDF68A8A"))

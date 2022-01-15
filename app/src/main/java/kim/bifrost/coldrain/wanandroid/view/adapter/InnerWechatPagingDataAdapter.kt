@@ -9,6 +9,7 @@ import kim.bifrost.coldrain.wanandroid.R
 import kim.bifrost.coldrain.wanandroid.base.BasePagingAdapter
 import kim.bifrost.coldrain.wanandroid.databinding.HomeRvItemBinding
 import kim.bifrost.coldrain.wanandroid.repo.remote.bean.ArticleData
+import kim.bifrost.coldrain.wanandroid.utils.htmlDecode
 import kim.bifrost.coldrain.wanandroid.view.activity.WebPageActivity
 
 /**
@@ -26,7 +27,7 @@ class InnerWechatPagingDataAdapter(context: Context, private val callback: Holde
     override fun onBindViewHolder(holder: Holder<HomeRvItemBinding>, position: Int) {
         holder.binding.apply {
             val data = getItem(position)!!
-            homeRvTitle.text = data.title
+            homeRvTitle.text = data.title.htmlDecode()
             homeRvDate.text = data.niceDate
             homeRvHead.text = if (data.author.isNotEmpty()) data.author else data.shareUser
             homeRvLabel.text = data.superChapterName + "/" + data.chapterName

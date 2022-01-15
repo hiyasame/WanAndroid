@@ -32,7 +32,7 @@ class CollectViewModel : ViewModel() {
 
     fun uncollect(id: Int, onComplete: () -> Unit) {
         viewModelScope.launch(Dispatchers.IO) {
-            ApiService.uncollect(id).ifSuccess {
+            ApiService.unCollectArticle(id).ifSuccess {
                 toastConcurrent("取消收藏成功")
                 withContext(Dispatchers.Main) {
                     onComplete()

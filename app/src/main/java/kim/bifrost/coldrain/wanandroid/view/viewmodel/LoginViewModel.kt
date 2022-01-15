@@ -28,7 +28,7 @@ class LoginViewModel(var account: String?, var password: String?) : ViewModel() 
         }
         viewModelScope.launch(Dispatchers.IO) {
             kotlin.runCatching {
-                val data = ApiService.login(account!!, password!!)
+                val data = ApiService.loginWanAndroid(account!!, password!!)
                 data.errorMsg.isEmpty().elseThen {
                     // 登录失败逻辑
                     toastConcurrent(data.errorMsg)
@@ -37,7 +37,7 @@ class LoginViewModel(var account: String?, var password: String?) : ViewModel() 
                 data.success().then {
                     // 登录成功逻辑
                     toastConcurrent("登录成功!")
-                    UserData.userInfoData = ApiService.info().data
+                    UserData.userInfoData = ApiService.getInfo().data
                     _loginLiveData.postValue(true)
                 }
             }.onFailure {

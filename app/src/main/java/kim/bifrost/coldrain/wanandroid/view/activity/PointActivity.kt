@@ -1,6 +1,7 @@
 package kim.bifrost.coldrain.wanandroid.view.activity
 
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -42,5 +43,12 @@ class PointActivity : BaseVMActivity<PointViewModel, ActivityPointBinding>() {
             }
             addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
         }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> finish()
+        }
+        return true
     }
 }

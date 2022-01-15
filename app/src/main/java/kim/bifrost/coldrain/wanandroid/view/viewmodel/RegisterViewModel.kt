@@ -35,7 +35,7 @@ class RegisterViewModel(
         }
         viewModelScope.launch(Dispatchers.IO) {
             kotlin.runCatching {
-                val data = ApiService.register(account!!, password!!, repassword!!)
+                val data = ApiService.registerWanAndroid(account!!, password!!, repassword!!)
                 data.errorMsg.isEmpty().elseThen {
                     // 注册失败逻辑
                     toastConcurrent(data.errorMsg)
@@ -44,7 +44,7 @@ class RegisterViewModel(
                 data.success().then {
                     // 注册成功逻辑
                     toastConcurrent("注册成功!")
-                    UserData.userInfoData = ApiService.info().data
+                    UserData.userInfoData = ApiService.getInfo().data
                     _registerLiveData.postValue(true)
                 }
             }.onFailure {

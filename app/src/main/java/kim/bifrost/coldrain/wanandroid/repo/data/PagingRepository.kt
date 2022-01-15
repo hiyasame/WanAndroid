@@ -20,13 +20,13 @@ object PagingRepository {
      * @return data
      */
     suspend fun getArticlePages(page: Int, size: Int = 20): List<ArticleData> {
-        if (page == 0) return ApiService.topArticles().data?.map {
+        if (page == 0) return ApiService.getTopArticles().data?.map {
             it.apply {
                 author = "置顶    >>>    $author"
                 shareUser = "置顶     >>>     $shareUser"
             }
         } ?: error("failed to attach cloud data")
-        return ApiService.articles(page, size).data?.datas ?: error("failed to attach cloud data")
+        return ApiService.getArticles(page, size).data?.datas ?: error("failed to attach cloud data")
     }
 
     /**
@@ -40,7 +40,7 @@ object PagingRepository {
         page: Int,
         size: Int = 20,
     ): List<CollectionData.SingleCollectionData> {
-        return ApiService.collections(page, size).data?.datas
+        return ApiService.getCollections(page, size).data?.datas
             ?: error("failed to attach cloud data")
     }
 
@@ -55,7 +55,7 @@ object PagingRepository {
         page: Int,
         size: Int = 20,
     ): List<ArticleData> {
-        return ApiService.squareData(page, size).data?.datas ?: error("failed to attach cloud data")
+        return ApiService.getSquareData(page, size).data?.datas ?: error("failed to attach cloud data")
     }
 
     suspend fun getWechatHistoryArticles(
@@ -63,7 +63,7 @@ object PagingRepository {
         page: Int,
         size: Int = 20,
     ): List<ArticleData> {
-        return ApiService.wxHistoryArticles(cid, page, size).data?.datas ?: error("failed to attach cloud data")
+        return ApiService.getWxHistoryArticles(cid, page, size).data?.datas ?: error("failed to attach cloud data")
     }
 
     suspend fun getSystemArticles(

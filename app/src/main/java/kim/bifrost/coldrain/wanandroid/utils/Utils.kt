@@ -1,11 +1,17 @@
 package kim.bifrost.coldrain.wanandroid.utils
 
+import android.content.Context
 import android.graphics.Color
 import android.os.Build
+import android.text.Html
+import android.text.Spanned
+import android.util.TypedValue
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.annotation.RequiresApi
+import androidx.core.view.setPadding
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kim.bifrost.coldrain.wanandroid.R
@@ -13,6 +19,8 @@ import kim.bifrost.coldrain.wanandroid.base.BasePagingAdapter
 import kim.bifrost.coldrain.wanandroid.repo.data.UserData
 import kim.bifrost.coldrain.wanandroid.repo.remote.ApiService
 import kim.bifrost.coldrain.wanandroid.repo.remote.bean.ArticleData
+import kim.bifrost.coldrain.wanandroid.view.activity.WebPageActivity
+import kim.bifrost.coldrain.wanandroid.widget.TagLayout
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -40,7 +48,7 @@ fun <T: BasePagingAdapter<*, ArticleData>> getCollectFunc(viewModelScope: Corout
                 val data = adapter.getItemOut(bindingAdapterPosition)!!
                 viewModelScope.launch(Dispatchers.IO) {
                     if (data.collect) {
-                        ApiService.uncollect(data.id).ifSuccess { _ ->
+                        ApiService.unCollectArticle(data.id).ifSuccess { _ ->
                             withContext(Dispatchers.Main) {
                                 toast("已取消收藏")
                                 data.collect = false
@@ -51,7 +59,7 @@ fun <T: BasePagingAdapter<*, ArticleData>> getCollectFunc(viewModelScope: Corout
                             toastConcurrent("网络请求失败: $it")
                         }
                     } else {
-                        ApiService.collect(data.id).ifSuccess { _ ->
+                        ApiService.collectArticle(data.id).ifSuccess { _ ->
                             withContext(Dispatchers.Main) {
                                 toastConcurrent("已收藏")
                                 data.collect = true
@@ -75,4 +83,22 @@ fun RecyclerView.scrollToTop() {
     }
 }
 
-fun String.htmlDecode(): String = URLDecoder.decode(this, "utf-8")
+fun String.htmlDecode(): Spanned = Html.fromHtml(this)
+
+@RequiresApi(Build.VERSION_CODES.O)
+fun TagLayout.tag(
+    context: Context,
+    text: String,
+    color: Color,
+    onClick: View.OnClickListener = View.OnClickListener{ }
+): TextView {
+    return TextView(context).apply {
+        setPadding(30)
+        setTextSize(TypedValue.COMPLEX_UNIT_SP, 16F)
+        this.text = text
+        layoutParams = (this@tag.layoutParams as ViewGroup.MarginLayoutParams).apply { setMargins(15, 10, 15, 10) }
+        setBackgroundColor(Color.parseColor("#CBEDEDED"))
+        setTextColor(color.toArgb())
+        setOnClickListener(onClick)
+    }
+}

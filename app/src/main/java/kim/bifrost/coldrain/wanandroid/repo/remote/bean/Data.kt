@@ -199,3 +199,11 @@ data class PointData(
     val userId: Int,
     val username: String
 )
+
+data class HotKeyData(
+    val id: Int,
+    val link: String,
+    val name: String,
+    val order: Int,
+    val visible: Int
+)

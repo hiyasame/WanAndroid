@@ -53,7 +53,7 @@ class HomeFragViewModel : ViewModel() {
     fun refresh() {
         banners.clear()
         viewModelScope.launch(Dispatchers.IO) {
-            val body = ApiService.banners()
+            val body = ApiService.getBanner()
             body.success().then { banners.addAll(body.data!!) }
             withContext(Dispatchers.Main) {
                 _updater.value = 1
@@ -70,7 +70,7 @@ class HomeFragViewModel : ViewModel() {
                         it.apply {
                             if (data.collect) {
                                 viewModelScope.launch(Dispatchers.IO) {
-                                    ApiService.uncollect(data.id).ifSuccess {
+                                    ApiService.unCollectArticle(data.id).ifSuccess {
                                         withContext(Dispatchers.Main) {
                                             toast("已取消收藏")
                                             data.collect = false
@@ -84,7 +84,7 @@ class HomeFragViewModel : ViewModel() {
                                 }
                             } else {
                                 viewModelScope.launch(Dispatchers.IO) {
-                                    ApiService.collect(data.id).ifSuccess {
+                                    ApiService.collectArticle(data.id).ifSuccess {
                                         withContext(Dispatchers.Main) {
                                             toastConcurrent("已收藏")
                                             data.collect = true

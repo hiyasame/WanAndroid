@@ -169,7 +169,7 @@ class MainActivity : BaseVMActivity<MainViewModel, ActivityMainBinding>(isCancel
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.query -> {
-                // TODO 搜索功能
+                startActivity(Intent(this, SearchActivity::class.java))
             }
             // 点击home键显示滑动菜单
             android.R.id.home -> binding.drawerLayout.openDrawer(GravityCompat.START)

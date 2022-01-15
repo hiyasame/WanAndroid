@@ -16,4 +16,12 @@
     <string name="login_text">已有账户？去登录</string>
     <string name="goto_login">去登录</string>
     <string name="def_level">等级: —- 排名: —-</string>
+    <string name="hot_search_tag">热门搜索</string>
+    <string name="search_history">搜索历史</string>
+    <string name="clear">清空</string>
+    <string name="my_score">我的积分</string>
+    <string name="my_collection">我的收藏</string>
+    <string name="todo">TODO</string>
+    <string name="about_us">关于我们</string>
+    <string name="logout">退出登录</string>
 </resources>

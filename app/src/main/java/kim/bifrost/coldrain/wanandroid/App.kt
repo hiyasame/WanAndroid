@@ -29,6 +29,8 @@ class App : Application() {
 
         val cookieData: SharedPreferences by lazy { context.getSharedPreferences("cookie", Context.MODE_PRIVATE) }
 
+        val searchHistoryData: SharedPreferences by lazy { context.getSharedPreferences("search_history", Context.MODE_PRIVATE) }
+
         val gson: Gson = GsonBuilder()
             .setPrettyPrinting()
             .disableHtmlEscaping()

@@ -13,6 +13,6 @@ import kotlinx.coroutines.flow.flow
  **/
 class ProjectFragViewModel : ViewModel() {
     val types = flow {
-        emit(ApiService.getProjectType())
+        emit(ApiService.getProjectTypes())
     }
 }

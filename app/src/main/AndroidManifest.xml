@@ -16,6 +16,12 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
         <activity
+            android:name=".view.activity.SearchResultActivity"
+            android:exported="true" />
+        <activity
+            android:name=".view.activity.SearchActivity"
+            android:exported="true" />
+        <activity
             android:name=".view.activity.PointActivity"
             android:exported="true" />
         <activity

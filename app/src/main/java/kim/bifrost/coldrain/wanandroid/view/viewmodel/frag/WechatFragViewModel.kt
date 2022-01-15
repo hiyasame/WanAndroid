@@ -13,6 +13,6 @@ import kotlinx.coroutines.flow.flow
  **/
 class WechatFragViewModel : ViewModel() {
     val wechatArticleTypes = flow {
-        emit(ApiService.wxArticles().data!!)
+        emit(ApiService.getWxArticle().data!!)
     }
 }
